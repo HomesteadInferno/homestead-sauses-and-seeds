@@ -1,0 +1,380 @@
+/* 1. ПІДКЛЮЧЕННЯ ШРИФТІВ (Тільки зверху!) */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto+Slab:wght@300;400;700&display=swap');
+
+/* 2. ЗАГАЛЬНІ ЗМІННІ */
+
+body {
+            margin: 0;
+            font-family: 'Roboto Slab', serif;
+            color: var(--text-color);
+        }
+:root {
+    --primary-orange: #d6603a;
+    --text-color: #eaddcf;
+    --cart-bg: #2a1f18;
+    --modal-overlay: rgba(0, 0, 0, 0.9);
+}
+
+
+.product-of-the-day {
+    position: relative !important;
+    border: 2px solid #ff4d00 !important;
+    overflow: visible !important;
+}
+
+.hot-badge {
+    position: absolute !important;
+    top: -10px;
+    right: -10px;
+    background: linear-gradient(45deg, #ff4d00, #ffcc00);
+    color: white !important;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50px;
+    z-index: 100;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+
+/* 3. ПЛАВАЮЧА КНОПКА КОРЗИНИ */
+.floating-cart {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--primary-orange);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.floating-cart:hover {
+    transform: scale(1.1);
+}
+
+.cart-icon {
+    font-size: 28px;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #fff;
+    color: #000;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    border: 2px solid var(--primary-orange);
+}
+
+/* ФІНАЛЬНА КНОПКА ЗАМОВИТИ */
+.summary-side button, 
+button[onclick="submitOrder()"] {
+    width: 100%;
+    background: var(--primary-orange);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-family: 'Roboto Slab', serif;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(214, 96, 58, 0.3);
+}
+
+.summary-side button:hover {
+    background: #e67550;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(214, 96, 58, 0.5);
+}
+
+.summary-side button:active {
+    transform: translateY(0);
+}
+
+/* 4. МОДАЛЬНЕ ВІКНО ТА ФОРМА ОФОРМЛЕННЯ */
+.modal { 
+    display: none; 
+    position: fixed; 
+    top:0; left:0; width: 100%; height: 100%; 
+    background: var(--modal-overlay); 
+    z-index: 2000; 
+    justify-content: center; 
+    align-items: center; 
+    backdrop-filter: blur(8px);
+}
+
+.modal-box { 
+    background: #231a14; 
+    width: 95%; 
+    max-width: 900px; 
+    padding: 40px; 
+    border: 1px solid var(--primary-orange); 
+    position: relative;
+    display: grid; 
+    grid-template-columns: 1fr 300px; 
+    gap: 40px;
+}
+
+.overlay {
+    /* Накладаємо темний градієнт поверх картинки */
+    background: linear-gradient(to bottom, rgba(20, 15, 10, 0.92), rgba(40, 25, 15, 0.85)), 
+                url('1.PNG') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    color: #eaddcf; /* Твій фірмовий колір тексту */
+}
+
+/* На всякий випадок обнулимо body, щоб не було білих рамок */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1a100a; /* Фоновий колір на випадок, якщо картинка довго вантажиться */
+}
+
+
+/* Налаштування сітки модалки для десктопа */
+#modal-main-content {
+    display: grid;
+    grid-template-columns: 1fr 300px; /* Два стовпчики за замовчуванням */
+    gap: 40px;
+    width: 100%;
+}
+
+.close-btn { 
+    position: absolute; 
+    top: 15px; 
+    right: 20px; 
+    font-size: 30px; 
+    cursor: pointer; 
+    color: #888; 
+}
+
+/* СТИЛІЗАЦІЯ ПОЛІВ ВВОДУ */
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    background: #1a120e;
+    border: 1px solid #44332a;
+    color: white;
+    padding: 12px;
+    border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+/* Ефекти при фокусі */
+.form-group input:focus, 
+.form-group select:focus {
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 8px rgba(214, 96, 58, 0.3);
+    outline: none;
+}
+
+.form-side h2 {
+    border-bottom: 2px solid var(--primary-orange);
+    display: inline-block;
+    margin-bottom: 25px;
+    padding-bottom: 5px;
+}
+
+.order-summary { 
+    background: rgba(0,0,0,0.3); 
+    padding: 20px; 
+    border: 1px dashed #44332a; 
+}
+
+#success-msg { 
+    text-align: center; 
+    grid-column: span 2; 
+    display: none; 
+    padding: 40px 0; 
+}
+
+/* --- ФУТЕР --- */
+        footer {
+            background-color: #1a1512;
+            border-top: 1px solid #44332a;
+            padding: 30px 0;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-logo-img {
+            max-width: 200px; 
+            height: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            font-size: 12px;
+            text-transform: uppercase;
+            align-items: center;
+        }
+
+        .footer-contacts {
+            font-size: 12px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+
+/* 5. АДАПТИВНІСТЬ (Покращена версія) */
+@media (max-width: 768px) {
+    /* Робимо саму модалку на весь екран */
+    .modal-box { 
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        overflow-y: auto; /* Дозволяємо скрол вниз */
+        display: block;   /* Відключаємо сітку тут */
+        padding: 20px;
+        margin: 0;
+        border: none;
+    }
+
+    /* Стовпчики форми стають один під одним */
+    #modal-main-content {
+        display: block;   /* Стакнемо форму і кошик вертикально */
+    }
+
+    /* Додаємо відступ для правої частини (де кнопка "Замовити") */
+    .summary-side {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px dashed var(--primary-orange);
+    }
+
+    /* Виправляємо головну сторінку продукту (Фото над текстом) */
+    .product-page {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+
+    /* Щоб фото не було занадто великим на весь екран телефону */
+    .main-img-wrap img {
+        height: 300px; 
+    }
+        }
+@media (max-width: 768px) {
+    /* Сама коробка модалки */
+    .modal-box {
+        width: 100% !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        margin: 0 !important;
+        padding: 15px !important;
+        display: block !important; /* Вбиваємо grid на мобілці */
+        overflow-y: auto !important; /* Дозволяємо скролити вниз до кнопки */
+        border: none !important;
+    }
+
+    /* Внутрішній контейнер (той, що з інлайновим стилем був) */
+    #modal-main-content {
+        display: block !important; /* Тільки один стовпчик */
+        width: 100% !important;
+    }
+
+    /* Форма */
+    .form-side {
+        width: 100% !important;
+        margin-bottom: 30px;
+    }
+
+    /* Права частина з підсумком замовлення */
+    .summary-side {
+        width: 100% !important;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        box-sizing: border-box;
+    }
+
+    /* Заголовки та тексти */
+    .form-side h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    /* Поля вводу робимо зручними для пальців */
+    input, select, textarea {
+        font-size: 16px !important; 
+        min-height: 45px;
+    }
+    }
+@media (max-width: 768px) {
+    .summary-side .add-btn {
+        width: 100% !important;
+        position: relative;
+        margin-top: 15px;
+        padding: 18px !important;
+        font-size: 18px !important;
+    }
+        }
+/* Кнопка "Назад" */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(214, 96, 58, 0.3);
+    border-radius: 8px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-family: 'Roboto Slab', serif;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.back-btn:hover {
+    background: rgba(214, 96, 58, 0.2);
+    border-color: var(--primary-orange);
+    transform: translateX(-5px); /* Легкий ефект руху вліво */
+}
+
+.back-btn svg {
+    fill: var(--primary-orange);
+    width: 18px;
+    height: 18px;
+}
+
+/* Адаптація для мобілок */
+@media (max-width: 600px) {
+    .back-btn {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+}
+
+

@@ -1,1 +1,1 @@
-# homestead-sauses-and-seeds
+# homestead-shop
