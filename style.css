@@ -369,6 +369,30 @@ body {
     height: 18px;
 }
 
+/* Клас для порожніх полів */
+.input-error {
+    border: 1px solid #ff4d4d !important;
+    box-shadow: 0 0 5px rgba(255, 77, 77, 0.5);
+    transition: all 0.3s ease;
+}
+
+/* Анімація обертання на кнопці заказу */
+.spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 /* Адаптація для мобілок */
 @media (max-width: 600px) {
     .back-btn {

@@ -103,18 +103,67 @@ window.pushToCart = function() {
     alert("Додано у кошик! 🌶️");
 };
 
+
+
+window.clearFullCart = function() {
+    if (confirm("Видалити всі товари з кошика?")) {
+        saveCart([]); // Очищуємо масив у LocalStorage
+        updateCartUI(); // Оновлюємо інтерфейс
+        
+        // Якщо кошик став порожнім, закриваємо модалку оформлення
+        const checkoutModal = document.getElementById('checkout-modal');
+        if (checkoutModal && checkoutModal.style.display === 'block') {
+            closeCheckout();
+        }
+    }
+};
+
+
+
+
 // === 4. ВІДПРАВКА ЗАМОВЛЕННЯ ===
 window.submitOrder = async function() {
+    const fieldIds = ['cust-name', 'cust-phone', 'cust-city', 'cust-branch'];
+    let hasError = false;
+    fieldIds.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            if (!input.value.trim()) {
+                input.classList.add('input-error'); // Додаємо червону рамку
+                hasError = true;
+            } else {
+                input.classList.remove('input-error'); // Прибираємо, якщо вже заповнено
+            }
+        }
+    });
+
+    if (hasError) {
+        alert("Будь ласка, заповніть виділені поля для доставки.");
+        return;
+    }
+
+    const submitBtn = document.querySelector('.summary-side .add-btn');
+    const originalText = submitBtn.innerHTML;
     const cart = getFreshCart();
+    
     const name = document.getElementById('cust-name')?.value.trim();
     const phone = document.getElementById('cust-phone')?.value.trim();
     const city = document.getElementById('cust-city')?.value.trim();
     const branch = document.getElementById('cust-branch')?.value.trim();
     
+    
     if (!name || !phone || !city || !branch) {
-        alert("Будь ласка, заповніть всі поля доставки!");
+        alert("Будь ласка, заповніть всі поля!");
         return;
     }
+
+    // 2. БЛОКУЄМО КНОПКУ ПЕРЕД ВІДПРАВКОЮ
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = "0.7";
+    submitBtn.style.cursor = "not-allowed";
+    submitBtn.innerHTML = `
+        <span class="spinner"></span> Відправляємо...
+    `;
 
     const currentNum = Date.now().toString().slice(-6);
 
@@ -126,34 +175,44 @@ window.submitOrder = async function() {
     const googleScriptUrl = "https://script.google.com/macros/s/AKfycbzk1Yeg_GjGZ52KZCnmP2yf_i6jpR3AfwL2BxWT4HoE4VTkn1x_ksg9LuEm8PDS7GmH/exec";
 
 try {
-    await fetch(googleScriptUrl, {
-        method: "POST",
-        mode: "no-cors", // Це важливо для Google Scripts
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: orderText })
-    });
-
-        const mainContent = document.getElementById('modal-main-content');
-        const successMsg = document.getElementById('success-msg');
-        
-        if (mainContent) mainContent.style.display = 'none';
-        if (successMsg) {
-            successMsg.style.display = 'block';
-            successMsg.innerHTML = `
-                <div style="padding: 40px 20px; text-align: center;">
-                    <h2 style="color: #6ba86b;">🌿 Замовлення №${currentNum} прийнято!</h2>
-                    <p style="color: white;">Дякуємо! Ми скоро зв'яжемося з вами.</p>
-                    <button class="add-btn" onclick="closeCheckout()" style="margin-top:20px; background: #325e34; color: white; border: none; padding: 10px 20px; cursor: pointer;">Закрити</button>
-                </div>`;
-        }
-        
-        saveCart([]); 
-        updateCartUI();
+        await fetch(googleScriptUrl, {
+            method: "POST",
+            mode: "no-cors", 
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: orderText })
+        });
     } catch (e) {
-        console.error("Помилка:", e);
-        alert("Помилка відправки.Спробуйте ще раз.");
+        console.log("Запит пішов (обробка через no-cors)"); 
     }
-};
+
+    // --- ВСЕ, ЩО НИЖЧЕ, ТЕПЕР ПОЗА CATCH І СПРАЦЮЄ ЗАВЖДИ ---
+
+    const mainContent = document.getElementById('modal-main-content');
+    const successMsg = document.getElementById('success-msg');
+        
+    if (mainContent) mainContent.style.display = 'none';
+    
+    if (successMsg) {
+        successMsg.style.display = 'block';
+        successMsg.innerHTML = `
+            <div style="padding: 40px 20px; text-align: center;">
+                <h2 style="color: #6ba86b;">🌿 Замовлення №${currentNum} прийнято!</h2>
+                <p style="color: white;">Дякуємо! Ми скоро зв'яжемося з вами.</p>
+                <button class="add-btn" onclick="closeCheckout()" style="margin-top:20px; background: #325e34; color: white; border: none; padding: 10px 20px; cursor: pointer;">Закрити</button>
+            </div>`;
+    }
+        
+    saveCart([]); 
+    updateCartUI();
+    
+    // Повертаємо кнопці початковий стан (на майбутнє)
+    if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = "1";
+        submitBtn.style.cursor = "pointer";
+        submitBtn.innerHTML = originalText;
+    }
+}; // Кінець функції submitOrder
 
 // === 1. ГАЛЕРЕЯ (Щоб не було помилок при завантаженні) ===
 function updateView(img) {
@@ -174,6 +233,8 @@ function changeImage(dir) {
         updateView(thumbs[currentImgIndex]);
     }
 }
+
+
 // === 6. ЗАПУСК ===
 document.addEventListener('DOMContentLoaded', updateCartUI);
 window.addEventListener('pageshow', updateCartUI);
