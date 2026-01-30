@@ -202,8 +202,12 @@
                 </aside>
 
                 <main class="products-grid">
-                    <a href="productHabaneroRedSavina.html" class="product-card" class="product-habanero"><div class="product-thumb"><button class="quick-add-btn" onclick="addToCartDirectly('Назва', 150)">🛒</button>
-                        <div class="img-container"><img src="item1.jpg" alt="Товар"></div></div>
+                    <a href="productHabaneroRedSavina.html" class="product-card" class="product-habanero"><div class="product-thumb"><button class="quick-add-btn" 
+        onclick="addToCartDirectly('Назва Перцю', parseFloat(this.closest('.product-card').querySelector('.add-btn').getAttribute('data-price') || 150))">
+   🛒
+</button>
+
+                       <div class="img-container"><img src="item1.jpg" alt="Товар"></div></div>
 <div class="product-tags">
         <span class="product-tag">🔥 Дуже гостро</span>
         <span class="product-tag">🍋 З цитрусовим нотками</span>
@@ -213,7 +217,11 @@
                         <div class="product-label">Habanero Red Savina <p class="price card-price" data-base-price="50" data-allow-sale="true">50 ₴</p></div>
                     </a>
                     <a href="productHabaneroDominika.html" class="product-card product-habanero product-thumb"> 
-                  <button class="quick-add-btn" onclick="addToCartDirectly('Назва', 150)">🛒</button>
+                  <button class="quick-add-btn" 
+        onclick="addToCartDirectly('Назва Перцю', parseFloat(this.closest('.product-card').querySelector('.add-btn').getAttribute('data-price') || 150))">
+   🛒
+</button>
+
       <div class="img-container"><img src="item1.jpg" alt="Товар"></div></div>
 <div class="product-tags">
         <span class="product-tag">🔥 Дуже гостро</span>
