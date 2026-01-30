@@ -208,12 +208,30 @@ window.submitOrder = async function() {
     submitBtn.disabled = true;
     submitBtn.innerHTML = `Відправляємо...`;
 
+        // 3. ФОРМУЄМО ПОВІДОМЛЕННЯ
     const currentNum = Date.now().toString().slice(-6);
-    let orderText = `📦 №${currentNum}\n👤 ${name}\n📞 ${phone}\n📍 ${city}, ${branch}\n🛒 Товари:\n` + 
-                    cart.map(i => `- ${i.name} x${i.qty}`).join('\n');
+    const cart = getFreshCart();
+    
+    // Рахуємо фінальну суму
+    let totalSum = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+    
+    // Формуємо текст (Додаємо суму в кінці!)
+    let orderText = `📦 ЗАМОВЛЕННЯ №${currentNum}\n`;
+    orderText += `----------\n`;
+    orderText += `👤 Клієнт: ${name}\n`;
+    orderText += `📞 Тел: ${phone}\n`;
+    orderText += `📍 Доставка: ${city}, ${branch}\n`;
+    if (email) orderText += `📧 Email: ${email}\n`;
+if (comment) orderText += `💬 Коментар: ${comment}\n`; // Додаємо коментар у повідомлення
+    
+    orderText += `\n🛒 Товари:\n`;
+    orderText += cart.map(i => `- ${i.name} (${i.qty} шт.) — ${i.price * i.qty} ₴`).join('\n');
+    
+    orderText += `\n\n💰 РАЗОМ ДО ОПЛАТИ: ${totalSum.toFixed(2)} ₴`; // ОСЬ ВОНА!
+    orderText += `\n----------`;
+
 
     try {
-     // ... (початок функції залишається таким самим)
 
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<span class="spinner"></span> Відправляємо...`;
@@ -228,40 +246,34 @@ window.submitOrder = async function() {
             body: JSON.stringify({ message: orderText })
         });
         
-        // Робимо паузу в 1 секунду для солідності, і показуємо успіх
+        Показуємо успіх через 0.8 сек, не чекаючи "тормозів" Google
         setTimeout(() => {
-            showOrderSuccess(currentNum);
+            const mainContent = document.getElementById('modal-main-content');
+            const successMsg = document.getElementById('success-msg');
+            const modalContent = document.querySelector('.modal-content');
+
+            if (mainContent) mainContent.style.display = 'none';
+            if (successMsg) {
+                successMsg.style.display = 'block';
+                successMsg.innerHTML = `
+                    <div style="padding: 40px 20px; text-align: center;">
+                        <h2 style="color: #6ba86b;">🌿 Замовлення №${currentNum} прийнято!</h2>
+                        <p style="color: white;">Ми вже готуємо ваші перці. Чекайте на дзвінок!</p>
+                        <button class="add-btn" onclick="closeCheckout()" style="margin-top:20px;">Закрити</button>
+                    </div>`;
+                if (modalContent) modalContent.scrollTop = 0; // Скрол вгору
+            }
+            
+            saveCart([]); 
+            updateCartUI();
+            if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalText; }
         }, 800);
 
-    } catch (e) { 
-        // Якщо навіть помилка мережі, все одно покажемо успіх, бо зазвичай дані доходять
-        showOrderSuccess(currentNum);
+    } catch (e) {
+        alert("Помилка з'єднання. Перевірте інтернет.");
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
     }
-};
-
-// Винесемо показ успіху в окрему функцію, щоб код був чистішим
-function showOrderSuccess(num) {
-    const mainContent = document.getElementById('modal-main-content');
-    const successMsg = document.getElementById('success-msg');
-    const modalContent = document.querySelector('.modal-content');
-
-    if (mainContent) mainContent.style.display = 'none';
-    if (successMsg) {
-        successMsg.style.display = 'block';
-        successMsg.innerHTML = `
-            <div style="padding: 40px 20px; text-align: center;">
-                <h2 style="color: #6ba86b;">🌿 Замовлення №${num} прийнято!</h2>
-                <p style="color:white; margin-bottom:20px;">Ми отримали ваші дані та скоро зателефонуємо.</p>
-                <button class="add-btn" onclick="closeCheckout()" style="background: #325e34; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">Закрити</button>
-            </div>`;
-        if (modalContent) modalContent.scrollTop = 0;
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    saveCart([]);
-    updateCartUI();
-}
-
-    if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalText; }
 };
 
 // === ГАЛЕРЕЯ ТА ЗАПУСК ===
