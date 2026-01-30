@@ -167,6 +167,16 @@ window.pushToCart = function() {
     updateCartUI();
     alert("Додано у кошик! 🌶️");
 };
+window.addToCartDirectly = function(name, price) {
+    let cart = getFreshCart();
+    const existing = cart.find(i => i.name === name && i.price === price);
+    if (existing) existing.qty += 1; 
+    else cart.push({ name, price, qty: 1 });
+    
+    saveCart(cart);
+    updateCartUI();
+    alert("Додано: " + name + " 🌶️");
+};
 
 window.clearFullCart = function() {
     if (confirm("Видалити всі товари з кошика?")) {
