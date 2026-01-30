@@ -208,9 +208,21 @@ window.submitOrder = async function() {
     submitBtn.disabled = true;
     submitBtn.innerHTML = `Відправляємо...`;
 
+const comment = document.getElementById('cust-comment')?.value.trim() || "";
+
     const currentNum = Date.now().toString().slice(-6);
-    let orderText = `📦 №${currentNum}\n👤 ${name}\n📞 ${phone}\n📍 ${city}, ${branch}\n🛒 Товари:\n` + 
-                    cart.map(i => `- ${i.name} x${i.qty}`).join('\n');
+    let orderText = `📦 ЗАМОВЛЕННЯ №${currentNum}\n----------\n`;
+orderText += `👤 ${name}\n📞 ${phone}\n📍 ${city}, ${branch}\n`;
+
+// Додаємо коментар, якщо він не порожній
+if (comment) orderText += `💬 Коментар: ${comment}\n`;
+
+orderText += `\n🛒 Товари:\n`;
+orderText += cart.map(i => `- ${i.name} x${i.qty}`).join('\n');
+
+// Додаємо фінальну суму
+orderText += `\n\n💰 РАЗОМ: ${totalSum.toFixed(2)} ₴`;
+
 
     try {
         await fetch("https://script.google.com/macros/s/AKfycbzk1Yeg_GjGZ52KZCnmP2yf_i6jpR3AfwL2BxWT4HoE4VTkn1x_ksg9LuEm8PDS7GmH/exec", {
