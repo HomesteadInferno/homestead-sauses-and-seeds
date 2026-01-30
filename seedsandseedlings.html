@@ -168,6 +168,74 @@
         @media (max-width: 600px) {
             .products-grid { grid-template-columns: 1fr; }
         }
+        /* Сітка товарів: по 2 в ряд на мобільних */
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 колонки */
+    gap: 10px;
+    padding: 10px;
+}
+
+/* Картка товару */
+.product-card {
+    position: relative; /* Для позиціювання кнопки-кошика */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+/* Теги (наприклад: 🔥 Гостро) */
+.product-tag {
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffeb3b;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+/* Оновлена кнопка-кошик (тепер вона компактна) */
+.quick-add-btn {
+    /* ПРИБИРАЄМО СТАРЕ ПРИВ'ЯЗУВАННЯ */
+    position: static !important; 
+    
+    background: #4caf50;
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none; /* Прибираємо тінь, щоб не вибивалася з рядка */
+    z-index: 1;
+}
+
+/* Контейнер, який змушує ціну та кнопку стати в ряд */
+.price-row {
+    display: flex;
+    justify-content: space-between; /* Розштовхує ціну вліво, а кнопку вправо */
+    align-items: center;
+    width: 100%;
+    margin-top: 5px;
+}
+
+
+.quick-add-btn:hover {
+    transform: scale(1.1); /* Кнопка трохи збільшиться */
+    background: #388e3c;
+}
+
+/* На комп'ютерах залишаємо 3 або 4 в ряд */
+@media (min-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
 
    
     </style>
@@ -204,11 +272,29 @@
                 <main class="products-grid">
                     <a href="productHabaneroRedSavina.html" class="product-card" class="product-habanero"><div class="product-thumb">
                         <div class="img-container"><img src="item1.jpg" alt="Товар"></div></div>
-                        <div class="product-label">Habanero Red Savina <p class="price card-price" data-base-price="50" data-allow-sale="true">50 ₴</p></div>
+                        <div class="product-tags">
+
+        <span class="product-tag">🔥 Дуже гостро</span>
+        <span class="product-tag">🍋 З цитрусовим нотками</span>
+    </div>
+                        <div class="product-label">Habanero Red Savina <p class="price card-price" data-base-price="50" data-allow-sale="true"class="price-row">50 ₴</p>
+                        <button class="quick-add-btn" 
+        onclick="event.stopPropagation(); event.preventDefault(); addToCartDirectly('Habanero Red Savina', this); return false;">
+   🛒
+</button></div>
                     </a>
                     <a href="productHabaneroRedSavina2 .html" class="product-card" class="product-habanero"><div class="product-thumb">
                         <div class="img-container"><img src="item1.jpg" alt="Товар"></div></div>
-                        <div class="product-label">Habanero Red Savina2 <p class="price card-price" data-base-price="50">50 ₴</p></div>
+                        <div class="product-tags">
+
+        <span class="product-tag">🔥 Дуже гостро</span>
+        <span class="product-tag">🍋 З цитрусовим нотками</span>
+    </div>
+                        <div class="product-label">Habanero Dominica<p class="price card-price" data-base-price="40"class="price-row">40 ₴</p><button class="quick-add-btn" 
+        onclick="event.stopPropagation(); event.preventDefault(); addToCartDirectly('Habanero Dominica', this); return false;">
+   🛒
+</button></div>
+                        
                     </a>
                 </main>
             </div>
