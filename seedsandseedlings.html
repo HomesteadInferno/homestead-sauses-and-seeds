@@ -217,14 +217,25 @@
 
 /* Контейнер, який змушує ціну та кнопку стати в ряд */
 .price-row {
-    display: flex;
-    justify-content: space-between; /* Розштовхує ціну вліво, а кнопку вправо */
-    align-items: center;
-    width: 100%;
-    margin-top: 5px;
+    display: flex !important;
+    justify-content: center !important; /* Зміщуємо все вправо */
+    align-items: center !important;
+    width: 100% !important;
+    gap: 12px; /* Робимо невелику відстань між ціною та кнопкою */
+    margin-top: 10px;
+}
+.card-price {
+    margin: 0 !important;
+    font-size: 1.25em; /* Зробимо ціну трохи помітнішою */
+    font-weight: 800;
+    color: #ffeb3b;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Додамо легкої тіні для чіткості */
 }
 
-
+.quick-add-btn {
+    position: static !important;
+    flex-shrink: 0; /* Щоб кнопка не стискалася, якщо назва задовга */
+}
 .quick-add-btn:hover {
     transform: scale(1.1); /* Кнопка трохи збільшиться */
     background: #388e3c;
@@ -236,8 +247,6 @@
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
 }
-
-   
     </style>
 </head>
 <body>
@@ -277,11 +286,14 @@
         <span class="product-tag">🔥 Дуже гостро</span>
         <span class="product-tag">🍋 З цитрусовим нотками</span>
     </div>
-                        <div class="product-label">Habanero Red Savina <p class="price card-price" data-base-price="50" data-allow-sale="true"class="price-row">50 ₴</p>
+                        <div class="product-label">Habanero Red Savina
+                        <div class="price-row">
+                            <p class="card-price" data-base-price="50" data-allow-sale="true">50 ₴</p>
                         <button class="quick-add-btn" 
         onclick="event.stopPropagation(); event.preventDefault(); addToCartDirectly('Habanero Red Savina', this); return false;">
    🛒
 </button></div>
+</div>
                     </a>
                     <a href="productHabaneroRedSavina2 .html" class="product-card" class="product-habanero"><div class="product-thumb">
                         <div class="img-container"><img src="item1.jpg" alt="Товар"></div></div>
@@ -290,10 +302,13 @@
         <span class="product-tag">🔥 Дуже гостро</span>
         <span class="product-tag">🍋 З цитрусовим нотками</span>
     </div>
-                        <div class="product-label">Habanero Dominica<p class="price card-price" data-base-price="40"class="price-row">40 ₴</p><button class="quick-add-btn" 
+                        <div class="product-label">Habanero Dominica
+                            <div class="price-row">
+                            <p class="card-price" data-base-price="40"class="price-row">40 ₴</p><button class="quick-add-btn" 
         onclick="event.stopPropagation(); event.preventDefault(); addToCartDirectly('Habanero Dominica', this); return false;">
    🛒
 </button></div>
+</div>
                         
                     </a>
                 </main>
