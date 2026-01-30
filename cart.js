@@ -211,18 +211,26 @@ window.submitOrder = async function() {
 const comment = document.getElementById('cust-comment')?.value.trim() || "";
 
     const currentNum = Date.now().toString().slice(-6);
-    let orderText = `📦 ЗАМОВЛЕННЯ №${currentNum}\n----------\n`;
-orderText += `👤 ${name}\n📞 ${phone}\n📍 ${city}, ${branch}\n`;
+const cart = getFreshCart();
+const totalSum = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+const currentNum = Date.now().toString().slice(-6);
 
-// Додаємо коментар, якщо він не порожній
-if (comment) orderText += `💬 Коментар: ${comment}\n`;
+    let orderText = "📦 ЗАМОВЛЕННЯ №" + currentNum + "\n";
+orderText += "👤 " + (name || "Клієнт") + "\n";
+orderText += "📞 " + (phone || "-") + "\n";
+orderText += "📍 " + (city || "-") + ", " + (branch || "-") + "\n";
 
-orderText += `\n🛒 Товари:\n`;
-orderText += cart.map(i => `- ${i.name} x${i.qty}`).join('\n');
+// Коментар (безпечно)
+const commentEl = document.getElementById('cust-comment');
+if (commentEl && commentEl.value.trim()) {
+    orderText += "💬 Коментар: " + commentEl.value.trim() + "\n";
+}
 
-// Додаємо фінальну суму
-orderText += `\n\n💰 РАЗОМ: ${totalSum.toFixed(2)} ₴`;
+orderText += "\n🛒 Товари:\n";
+orderText += cart.map(i => "- " + i.name + " x" + i.qty).join("\n");
 
+// Фінальна сума
+orderText += "\n\n💰 РАЗОМ: " + totalSum.toFixed(2) + " ₴";
 
     try {
         await fetch("https://script.google.com/macros/s/AKfycbzk1Yeg_GjGZ52KZCnmP2yf_i6jpR3AfwL2BxWT4HoE4VTkn1x_ksg9LuEm8PDS7GmH/exec", {
