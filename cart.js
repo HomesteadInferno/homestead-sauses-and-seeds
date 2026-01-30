@@ -238,43 +238,28 @@ if (comment) orderText += `💬 Коментар: ${comment}\n`; // Додаєм
 
     // 4. ВІДПРАВЛЯЄМО
     try {
-        // Ми не ставимо await перед fetch, щоб не чекати відповіді від повільного Google
         fetch("https://script.google.com/macros/s/AKfycbzk1Yeg_GjGZ52KZCnmP2yf_i6jpR3AfwL2BxWT4HoE4VTkn1x_ksg9LuEm8PDS7GmH/exec", {
-            method: "POST", 
-            mode: "no-cors", 
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: orderText })
+            method: "POST", mode: "no-cors", body: JSON.stringify({ message: msg })
         });
-        
-        Показуємо успіх через 0.8 сек, не чекаючи "тормозів" Google
         setTimeout(() => {
-            const mainContent = document.getElementById('modal-main-content');
-            const successMsg = document.getElementById('success-msg');
-            const modalContent = document.querySelector('.modal-content');
-
-            if (mainContent) mainContent.style.display = 'none';
-            if (successMsg) {
-                successMsg.style.display = 'block';
-                successMsg.innerHTML = `
-                    <div style="padding: 40px 20px; text-align: center;">
-                        <h2 style="color: #6ba86b;">🌿 Замовлення №${currentNum} прийнято!</h2>
-                        <p style="color: white;">Ми вже готуємо ваші перці. Чекайте на дзвінок!</p>
-                        <button class="add-btn" onclick="closeCheckout()" style="margin-top:20px;">Закрити</button>
-                    </div>`;
-                if (modalContent) modalContent.scrollTop = 0; // Скрол вгору
-            }
-            
-            saveCart([]); 
+            document.getElementById('modal-main-content').style.display = 'none';
+            const s = document.getElementById('success-msg');
+            s.style.display = 'block';
+            s.innerHTML = `<div style="text-align:center; padding:40px 20px;">
+                <h2 style="color:#6ba86b;">🌿 №${num} прийнято!</h2>
+                <p>Дякуємо за замовлення!</p>
+                <button class="add-btn" onclick="closeCheckout()" style="margin-top:20px;">Закрити</button>
+            </div>`;
+            document.querySelector('.modal-content').scrollTop = 0;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            saveCart([]);
             updateCartUI();
-            if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalText; }
+            btn.disabled = false;
+            btn.innerHTML = oldText;
         }, 800);
-
-    } catch (e) {
-        alert("Помилка з'єднання. Перевірте інтернет.");
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-    }
+    } catch (e) { alert("Помилка!"); btn.disabled = false; btn.innerHTML = oldText; }
 };
+
 
 // === ГАЛЕРЕЯ ТА ЗАПУСК ===
 let currentImgIndex = 0; // Додаємо індекс для відстеження фото
