@@ -273,7 +273,7 @@ window.submitOrder = async function() {
     }
 
     orderText += "\n🛒 Товари:\n";
-    orderText += cart.map(i => "- " + i.name + " x" + i.qty).join("\n");
+    orderText += cart.map(i => `- ${i.name} (${i.price} ₴) x ${i.qty}`).join("\n");
     orderText += "\n\n💰 РАЗОМ: " + totalSum.toFixed(2) + " ₴";
 
     try {
@@ -292,7 +292,7 @@ window.submitOrder = async function() {
         successMsg.style.display = 'block';
         successMsg.innerHTML = `
             <div style="padding: 40px 20px; text-align: center;">
-                <h2 style="color: #6ba86b;">🌿 Замовлення №${currentNum} прийнято!</h2>
+                <h2 style="color: #6ba86b;">🌿 Замовлення №${currentNum} прийнято! Дякуємо, ми скоро зв'яжемося з Вами.</h2>
                 <button class="add-btn" onclick="closeCheckout()" style="margin-top:20px;">Закрити</button>
             </div>`;
         if (modalContent) modalContent.scrollTop = 0; 
