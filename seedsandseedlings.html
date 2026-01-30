@@ -96,13 +96,6 @@
             padding-left: 5px;
         }
 
-        /* --- СІТКА ТОВАРІВ (9 блоків) --- */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 колонки */
-            gap: 30px;
-        }
-
         .product-card {
             background: rgba(40, 30, 25, 0.4); /* Напівпрозорий фон картки */
             border-radius: 12px;
@@ -202,10 +195,7 @@
                 </aside>
 
                 <main class="products-grid">
-                    <a href="productHabaneroRedSavina.html" class="product-card" class="product-habanero"><div class="product-thumb"><button class="quick-add-btn" 
-        onclick="addToCartDirectly('Назва Перцю', parseFloat(this.closest('.product-card').querySelector('.add-btn').getAttribute('data-price') || 150))">
-   🛒
-</button>
+                    <a href="productHabaneroRedSavina.html" class="product-card" class="product-habanero"><div class="product-thumb">
 
                        <div class="img-container"><img src="item1.jpg" alt="Товар"></div></div>
 <div class="product-tags">
@@ -214,13 +204,12 @@
     </div>
     
     
-                        <div class="product-label">Habanero Red Savina <p class="price card-price" data-base-price="50" data-allow-sale="true">50 ₴</p></div>
-                    </a>
-                    <a href="productHabaneroRedSavina2.html" class="product-card product-habanero product-thumb"> 
-                  <button class="quick-add-btn" 
+                        <div class="product-label">Habanero Red Savina <p class="price card-price" data-base-price="50" data-allow-sale="true">50 ₴</p><button class="quick-add-btn" 
         onclick="addToCartDirectly('Назва Перцю', parseFloat(this.closest('.product-card').querySelector('.add-btn').getAttribute('data-price') || 150))">
    🛒
-</button>
+</button></div>
+                    </a>
+                    <a href="productHabaneroRedSavina2.html" class="product-card product-habanero product-thumb"> 
 
       <div class="img-container"><img src="item1.jpg" alt="Товар"></div></div>
 <div class="product-tags">
@@ -229,7 +218,11 @@
     </div>
     
     
-                        <div class="product-label">Habanero Dominica <p class="price card-price" data-base-price="50">50 ₴</p></div>
+                        <div class="product-label">Habanero Dominica <p class="price card-price" data-base-price="50">50 ₴</p>
+                  <button class="quick-add-btn" 
+        onclick="addToCartDirectly('Назва Перцю', parseFloat(this.closest('.product-card').querySelector('.add-btn').getAttribute('data-price') || 150))">
+   🛒
+</button></div>
                     </a>
                 </main>
             </div>
