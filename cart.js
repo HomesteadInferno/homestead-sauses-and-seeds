@@ -167,47 +167,53 @@ window.pushToCart = function() {
     updateCartUI();
     alert("Додано у кошик! 🌶️");
 };
+
+// 1. функція додавання з карточки в корзину
 window.addToCartDirectly = function(manualName, buttonElement) {
-    const card = buttonElement.closest('.product-card');
-    
-   // Якщо manualName порожнє, беремо текст із заголовка h3 на картці
-    const actualName = manualName || card.querySelector('h3').innerText;
     try {
         // 1. Шукаємо картку
         const card = buttonElement.closest('.product-card');
         if (!card) throw new Error("Картку товару не знайдено");
 
-        // 2. Шукаємо елемент ціни всередині картки
+        // 2. Визначаємо назву (пріоритет: ручна назва -> заголовок h3)
+        const nameElement = card.querySelector('h3');
+        const actualName = manualName || (nameElement ? nameElement.innerText : "Невідомий товар");
+
+        // 3. Шукаємо ціну
         const priceElement = card.querySelector('.card-price');
         if (!priceElement) throw new Error("Ціну на картці не знайдено");
 
-        /// Отримуємо текст і розбиваємо його на окремі числа
-const rawText = priceElement.innerText;
-const numbers = rawText.match(/\d+/g); // Знаходить всі числа окремо: ["50", "45"]
-// Беремо останнє число (це завжди буде актуальна ціна, навіть якщо є стара закреслена)
-const cleanPrice = numbers ? parseFloat(numbers[numbers.length - 1]) : 0;
+        const rawText = priceElement.innerText;
+        const numbers = rawText.match(/\d+/g); 
+        // Беремо останнє число (актуальна ціна) [cite: 2026-01-26]
+        const cleanPrice = numbers ? parseFloat(numbers[numbers.length - 1]) : 0;
 
         if (isNaN(cleanPrice)) throw new Error("Не вдалося розпізнати ціну");
 
-        // 4. Логіка кошика (стандартна)
+        // 4. Логіка кошика
         let cart = getFreshCart();
-        const existing = cart.find(i => i.name === name);
+        
+        // ВАЖЛИВО: Шукаємо саме за actualName
+        const existing = cart.find(i => i.name === actualName);
         
         if (existing) {
             existing.qty += 1;
         } else {
-            cart.push({ name: name, price: cleanPrice, qty: 1 });
+            cart.push({ 
+                name: actualName, 
+                price: cleanPrice, 
+                qty: 1 
+            });
         }
         
         saveCart(cart);
         updateCartUI();
         
-        // 5. Сповіщення
-        alert(`🌶️ ${name} додано! Ціна: ${cleanPrice} ₴`);
+        // 5. Гарне сповіщення
+        alert(`🌶️ ${actualName} додано! Ціна: ${cleanPrice} ₴`);
 
     } catch (error) {
-        console.error("Помилка в addToCartDirectly:", error.message);
-        alert("Ой! Сталася помилка при додаванні. Перевір консоль.");
+        console.error("Помилка додавання:", error.message);
     }
 };
 
