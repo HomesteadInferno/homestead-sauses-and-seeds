@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <style>
         :root {
-            --primary-orange: #325e34;
+            --primary-orange: #d6603a;
             --text-color: #eaddcf;
             --sidebar-bg: rgba(20, 15, 10, 0.9);
         }
@@ -17,7 +17,7 @@
             margin: 0;
             font-family: 'Roboto Slab', serif;
             color: var(--text-color);
-            background: #1a100a url('1.PNG') no-repeat center center fixed;
+            background: #1a100a url('2.PNG') no-repeat center center fixed;
             background-size: cover;
         }
         a { text-decoration: none; color: inherit; }
@@ -108,9 +108,6 @@
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.05);
             transition: all 0.3s ease;
-            position: relative; /* ЦЕ ОБОВ'ЯЗКОВО! Це "якір" для нашої плашки */
-    overflow: visible !important; /* Щоб плашка могла трохи виходити за краї */
-    /* ... твої інші стилі ... */
         }
 
         .product-card:hover {
@@ -148,7 +145,7 @@
             text-align: center;
             text-transform: uppercase;
             font-weight: 700;
-            font-size: 20px;
+            font-size: 13px;
             letter-spacing: 1px;
             border-radius: 0 0 12px 12px; /* Заокруглюємо нижні кути */
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
@@ -158,6 +155,9 @@
         .product-card:hover .img-container img {
             transform: scale(1.1) rotate(3deg); /* Перчик трохи збільшується і повертається */
         }
+
+
+
         /* --- МОБІЛЬНА АДАПТАЦІЯ --- */
         @media (max-width: 1000px) {
             .main-layout { grid-template-columns: 1fr; }
@@ -168,8 +168,6 @@
         @media (max-width: 600px) {
             .products-grid { grid-template-columns: 1fr; }
         }
-
-   
     </style>
 </head>
 <body>
@@ -202,19 +200,49 @@
                 </aside>
 
                 <main class="products-grid">
-                    <a href="productHabaneroRedSavina.html" class="product-card" class="product-habanero"><div class="product-thumb">
-                        <div class="img-container"><img src="item1.jpg" alt="Товар"></div></div>
-                        <div class="product-label">Habanero Red Savina <p class="price card-price" data-base-price="50" data-allow-sale="true">50 ₴</p></div>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label">Homestead Inferno</div>
                     </a>
-                    <a href="productHabaneroRedSavina2 .html" class="product-card" class="product-habanero"><div class="product-thumb">
-                        <div class="img-container"><img src="item1.jpg" alt="Товар"></div></div>
-                        <div class="product-label">Habanero Red Savina2 <p class="price card-price" data-base-price="50">50 ₴</p></div>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label">Ультра-гострий Habanero</div>
                     </a>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label">Пекучий Trinidad Scorpion</div>
+                    </a>
+
+                                                                                                              <!-- текст комментария -->
+     <!--                 <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label"></div>
+                    </a>
+                    <a href="#" class="product-card">                                                                                       
+                        <div class="img-container"><img src="" alt="Товар"></div>                                 
+                        <div class="product-label"></div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label"></div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label"></div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label"></div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label"></div>
+                    </a>                                                              -->
                 </main>
             </div>
         </div>
     </div>
- <footer>
+    <footer>
             <div class="container footer-content">
                 <div class="footer-logo">
                     <img src="homesteadlogo.png" alt="Homestead" class="footer-logo-img">
@@ -231,10 +259,13 @@
             </div>
         </footer>
 
+
 <a href="#" class="floating-cart" onclick="openCheckout(); return false;">
     <span class="cart-icon">🛒</span>
     <span id="cart-count">0</span>
 </a>
+
+
 
 <div id="checkoutModal" class="modal">
     <div class="modal-box">
@@ -301,5 +332,4 @@
 </div>
 <script src="cart.js"></script>
 </body>
-
 </html>

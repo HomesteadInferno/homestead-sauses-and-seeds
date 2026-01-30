@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <style>
         :root {
-            --primary-orange: #325e34;
+            --primary-orange: #859e41;
             --text-color: #eaddcf;
             --sidebar-bg: rgba(20, 15, 10, 0.9);
         }
@@ -108,9 +108,6 @@
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.05);
             transition: all 0.3s ease;
-            position: relative; /* ЦЕ ОБОВ'ЯЗКОВО! Це "якір" для нашої плашки */
-    overflow: visible !important; /* Щоб плашка могла трохи виходити за краї */
-    /* ... твої інші стилі ... */
         }
 
         .product-card:hover {
@@ -148,7 +145,7 @@
             text-align: center;
             text-transform: uppercase;
             font-weight: 700;
-            font-size: 20px;
+            font-size: 13px;
             letter-spacing: 1px;
             border-radius: 0 0 12px 12px; /* Заокруглюємо нижні кути */
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
@@ -158,6 +155,7 @@
         .product-card:hover .img-container img {
             transform: scale(1.1) rotate(3deg); /* Перчик трохи збільшується і повертається */
         }
+
         /* --- МОБІЛЬНА АДАПТАЦІЯ --- */
         @media (max-width: 1000px) {
             .main-layout { grid-template-columns: 1fr; }
@@ -168,12 +166,9 @@
         @media (max-width: 600px) {
             .products-grid { grid-template-columns: 1fr; }
         }
-
-   
     </style>
 </head>
 <body>
-
     <div class="overlay">
         <div class="container">
             <header>
@@ -181,7 +176,7 @@
                     <img src="homesteadlogo.png" alt="Homestead" class="logo-small">
                 </a>
             </header>
-<button class="back-btn" onclick="goBack()">
+ <button class="back-btn" onclick="goBack()">
     <svg viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
     Назад
 </button>
@@ -196,19 +191,46 @@
                 <!--        <li><a href="tomatos.html">🍅 Помідори</a></li> 
                             <li><a href="#">🌿 Спеції</a></li>
                             <li><a href="#">Сушений перець</a></li>                       -->
-                           
                         </ul>
                     </nav>
                 </aside>
 
                 <main class="products-grid">
-                    <a href="productHabaneroRedSavina.html" class="product-card" class="product-habanero"><div class="product-thumb">
-                        <div class="img-container"><img src="item1.jpg" alt="Товар"></div></div>
-                        <div class="product-label">Habanero Red Savina <p class="price card-price" data-base-price="50" data-allow-sale="true">50 ₴</p></div>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label">Розсада</div>
                     </a>
-                    <a href="productHabaneroRedSavina2 .html" class="product-card" class="product-habanero"><div class="product-thumb">
-                        <div class="img-container"><img src="item1.jpg" alt="Товар"></div></div>
-                        <div class="product-label">Habanero Red Savina2 <p class="price card-price" data-base-price="50">50 ₴</p></div>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label">Помідори</div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label">Солодкий перець</div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label">Огірки</div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label">Дині</div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label">Баклажани</div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label">Спеції</div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label">Цибуля</div>
+                    </a>
+                    <a href="#" class="product-card">
+                        <div class="img-container"><img src="" alt="Товар"></div>
+                        <div class="product-label">Часник</div>
                     </a>
                 </main>
             </div>
@@ -230,6 +252,7 @@
                 </div>
             </div>
         </footer>
+       
 
 <a href="#" class="floating-cart" onclick="openCheckout(); return false;">
     <span class="cart-icon">🛒</span>
@@ -299,7 +322,7 @@
         </div>
     </div>
 </div>
+
 <script src="cart.js"></script>
 </body>
-
 </html>
