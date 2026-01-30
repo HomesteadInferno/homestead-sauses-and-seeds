@@ -281,7 +281,7 @@ window.submitOrder = async function() {
     const phone = document.getElementById('cust-phone')?.value.trim();
     const city = document.getElementById('cust-city')?.value.trim();
     const branch = document.getElementById('cust-branch')?.value.trim();
-    const email = document.getElementById('email')?.value.trim(); // Додав email, бо він є у тебе в HTML
+    const email = document.getElementById('email')?.value.trim(); 
 
     // Ще одна перевірка на всяк випадок
     if (!name || !phone || !city || !branch) {
@@ -289,7 +289,7 @@ window.submitOrder = async function() {
         return;
     }
 
-    // === ОСЬ ЦЕ Я ДОДАВ (ЗБЕРЕЖЕННЯ В ПАМ'ЯТЬ) ===
+    // === ЗБЕРЕЖЕННЯ В ПАМ'ЯТЬ (АВТОЗАПОВНЕННЯ) ===
     localStorage.setItem('saved_name', name);
     localStorage.setItem('saved_phone', phone);
     localStorage.setItem('saved_city', city);
@@ -301,7 +301,7 @@ window.submitOrder = async function() {
     const originalText = submitBtn.innerHTML;
     const cart = getFreshCart();
 
-    // 2. БЛОКУЄМО КНОПКУ, ЩОБ НЕ НАТИСНУЛИ ДВІЧІ
+    // 2. БЛОКУЄМО КНОПКУ
     submitBtn.disabled = true;
     submitBtn.style.opacity = "0.7";
     submitBtn.style.cursor = "not-allowed";
@@ -312,15 +312,14 @@ window.submitOrder = async function() {
     let totalSum = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
     
     let orderText = `📦 ЗАМОВЛЕННЯ №${currentNum}\n----------\n👤 ${name}\n📞 ${phone}\n📍 ${city}, ${branch}\n`;
-    if (email) orderText += `📧 ${email}\n`; // Додаємо email в текст замовлення, якщо він є
+    if (email) orderText += `📧 ${email}\n`; 
     orderText += `\n🛒 Товари:\n`;
     orderText += cart.map(i => `- ${i.name} x${i.qty}`).join('\n');
     orderText += `\n\n💰 Разом: ${totalSum.toFixed(2)} ₴`;
 
-    // Твій URL для Google Script
     const googleScriptUrl = "https://script.google.com/macros/s/AKfycbzk1Yeg_GjGZ52KZCnmP2yf_i6jpR3AfwL2BxWT4HoE4VTkn1x_ksg9LuEm8PDS7GmH/exec";
 
-    // 4. ВІДПРАВЛЯЄМО (FETCH)
+    // 4. ВІДПРАВЛЯЄМО
     try {
         await fetch(googleScriptUrl, {
             method: "POST",
@@ -333,8 +332,35 @@ window.submitOrder = async function() {
     }
 
     // 5. УСПІХ: ЧИСТИМО КОШИК І ПОКАЗУЄМО ПОВІДОМЛЕННЯ
+    // (Ось цього шматка у тебе не вистачало 👇)
+    
     const mainContent = document.getElementById('modal-main-content');
     const successMsg = document.getElementById('success-msg');
+        
+    if (mainContent) mainContent.style.display = 'none';
+    
+    if (successMsg) {
+        successMsg.style.display = 'block';
+        successMsg.innerHTML = `
+            <div style="padding: 40px 20px; text-align: center;">
+                <h2 style="color: #6ba86b;">🌿 Замовлення №${currentNum} прийнято!</h2>
+                <p style="color: white;">Дякуємо! Ми скоро зв'яжемося з вами.</p>
+                <button class="add-btn" onclick="closeCheckout()" style="margin-top:20px; background: #325e34; color: white; border: none; padding: 10px 20px; cursor: pointer;">Закрити</button>
+            </div>`;
+    }
+        
+    saveCart([]); // Очищуємо пам'ять кошика
+    updateCartUI(); // Оновлюємо вигляд
+    
+    // Повертаємо кнопку до життя
+    if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = "1";
+        submitBtn.style.cursor = "pointer";
+        submitBtn.innerHTML = originalText;
+    }
+}; 
+
  // Кінець функції submitOrder
 
 // === 1. ГАЛЕРЕЯ (Щоб не було помилок при завантаженні) ===
