@@ -227,7 +227,7 @@ body {
 }
 
 /* Сітка товарів: по 2 в ряд на мобільних */
-.product-grid {
+.products-grid {
     display: grid;
     grid-template-columns: 1fr 1fr; /* 2 колонки */
     gap: 10px;
