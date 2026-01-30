@@ -348,7 +348,11 @@ window.submitOrder = async function() {
                 <button class="add-btn" onclick="closeCheckout()" style="margin-top:20px; background: #325e34; color: white; border: none; padding: 10px 20px; cursor: pointer;">Закрити</button>
             </div>`;
     }
-        
+      // ФІКС: Автоматично скролимо модалку вгору, щоб людина побачила повідомлення
+        if (modalContainer) modalContainer.scrollTop = 0;
+        // Або якщо скролиться вся сторінка:
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }  
     saveCart([]); // Очищуємо пам'ять кошика
     updateCartUI(); // Оновлюємо вигляд
     
