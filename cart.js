@@ -256,12 +256,6 @@ window.submitOrder = async function() {
         fields.phone.classList.add('input-error');
         hasError = true;
     }
-    const name = document.getElementById('cust-name')?.value.trim();
-    const phone = document.getElementById('cust-phone')?.value.trim();
-    const city = document.getElementById('cust-city')?.value.trim();
-    const branch = document.getElementById('cust-branch')?.value.trim();
-    const email = document.getElementById('email')?.value.trim();
-    const comment = document.getElementById('cust-comment')?.value.trim() || "";
 
     if (hasError) {
         alert("Будь ласка, заповніть всі обов'язкові поля коректно!");
@@ -271,8 +265,6 @@ window.submitOrder = async function() {
     // --- Далі йде ваш код відправки (він робочий) ---
     const submitBtn = document.querySelector('.summary-side .add-btn');
     const originalText = submitBtn.innerHTML;
-    
-    // РАХУЄМО ВСЕ ОДИН РАЗ
     const cart = getFreshCart();
     const totalSum = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
     const currentNum = Date.now().toString().slice(-6);
@@ -301,20 +293,6 @@ window.submitOrder = async function() {
     orderText += cart.map(i => `- ${i.name} (${i.price} ₴) x ${i.qty}`).join("\n");
     orderText += `\n\n💰 РАЗОМ: ${totalSum.toFixed(2)} ₴`;
 
-    // ФОРМУЄМО ТЕКСТ
-    let orderText = "📦 ЗАМОВЛЕННЯ №" + currentNum + "\n";
-    orderText += "👤 " + (name || "Клієнт") + "\n";
-    orderText += "📞 " + (phone || "-") + "\n";
-    orderText += "📍 " + (city || "-") + ", " + (branch || "-") + "\n";
-
-    if (comment) {
-        orderText += "💬 Коментар: " + comment + "\n";
-    }
-
-    orderText += "\n🛒 Товари:\n";
-    orderText += cart.map(i => `- ${i.name} (${i.price} ₴) x ${i.qty}`).join("\n");
-    orderText += "\n\n💰 РАЗОМ: " + totalSum.toFixed(2) + " ₴";
-
     try {
         await fetch("https://script.google.com/macros/s/AKfycbzk1Yeg_GjGZ52KZCnmP2yf_i6jpR3AfwL2BxWT4HoE4VTkn1x_ksg9LuEm8PDS7GmH/exec", {
             method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" },
@@ -340,27 +318,6 @@ window.submitOrder = async function() {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
     }
-    } catch (e) { console.log("Sent"); }
-
-    const mainContent = document.getElementById('modal-main-content');
-    const successMsg = document.getElementById('success-msg');
-    const modalContent = document.querySelector('.modal-content');
-
-    if (mainContent) mainContent.style.display = 'none';
-    if (successMsg) {
-        successMsg.style.display = 'block';
-        successMsg.innerHTML = `
-            <div style="padding: 40px 20px; text-align: center;">
-                <h2 style="color: #6ba86b;">🌿 Замовлення №${currentNum} прийнято! Дякуємо, ми скоро зв'яжемося з Вами.</h2>
-                <button class="add-btn" onclick="closeCheckout()" style="margin-top:20px;">Закрити</button>
-            </div>`;
-        if (modalContent) modalContent.scrollTop = 0; 
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-        
-    saveCart([]);
-    updateCartUI();
-    if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalText; }
 };
 
 
