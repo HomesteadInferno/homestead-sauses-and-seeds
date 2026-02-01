@@ -86,9 +86,12 @@ function updateCartUI() {
             container.innerHTML = '<p style="text-align: center; opacity: 0.5; padding: 10px; color: #eaddcf;">Кошик порожній</p>';
         } else {
             container.innerHTML = cart.map((item, index) => {
-    // Шукаємо дані в базі за ID
-    const prodInfo = (typeof allProducts !== 'undefined') ? allProducts[item.id] : null;
-    const displayName = prodInfo ? prodInfo.name : item.id;
+    // ДОДАЄМО ЦЕЙ РЯДОК:
+    // Якщо item.name це ключ (н-р 'dominica'), беремо 'Habanero Dominica Red'. 
+    // Якщо ні — лишаємо як є.
+    const displayName = (typeof allProducts !== 'undefined' && allProducts[item.name]) 
+                        ? allProducts[item.name].name 
+                        : item.name;
 
     return `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); color: #eaddcf;">
@@ -174,34 +177,34 @@ window.pushToCart = function() {
     alert("Додано у кошик! 🌶️");
 };
 
-window.addToCartDirectly = function(productName, buttonElement) {
+window.addToCartDirectly = function(productId, buttonElement) {
     try {
-        // 1. Отримуємо назву
-        const actualName = productName;
-        if (!actualName || actualName === 'undefined') {
-            console.error("Помилка: назва товару не визначена");
-            return;
-        }
+        const card = buttonElement.closest('.product-card');
+        if (!card) throw new Error("Картку товару не знайдено");
 
-        // 2. Шукаємо ціну на сторінці
-        const wrapper = buttonElement.closest('.product-card') || 
-                        document.querySelector('.product-info-side') || 
-                        document;
-        
-        const priceElement = wrapper.querySelector('.card-price, #p-price, .current-price');
-        let cleanPrice = 0;
-        
-        if (priceElement) {
-            const numbers = priceElement.innerText.match(/\d+/g);
-            cleanPrice = numbers ? parseFloat(numbers[numbers.length - 1]) : 0;
-        }
+        // 1. БЕРЕМО НАЗВУ З БАЗИ (products.js)
+        // Якщо переданий ID існує в базі, беремо ім'я звідти. 
+        // Якщо ні — використовуємо те, що передали (як запасний варіант).
+        let actualName = (typeof allProducts !== 'undefined' && allProducts[productId]) 
+                         ? allProducts[productId].name 
+                         : productId;
 
-        // 3. Додаємо в кошик
+        // 2. ШУКАЄМО ЦІНУ НА КАРТЦІ (щоб врахувати акцію)
+        const priceElement = card.querySelector('.card-price');
+        if (!priceElement) throw new Error("Ціну на картці не знайдено");
+
+        const rawText = priceElement.innerText;
+        const numbers = rawText.match(/\d+/g); 
+        const cleanPrice = numbers ? parseFloat(numbers[numbers.length - 1]) : 0;
+
+        if (isNaN(cleanPrice)) throw new Error("Не вдалося розпізнати ціну");
+
+        // 3. ЛОГІКА КОШИКА
         let cart = getFreshCart();
         
-        // Шукаємо за НАЗВОЮ (це об'єднає товари з головної та зі сторінки)
+        // Тепер порівняння буде ідеальним, бо назва береться з одного джерела
         const existing = cart.find(i => i.name.trim() === actualName.trim());
-
+        
         if (existing) {
             existing.qty += 1;
         } else {
@@ -211,13 +214,22 @@ window.addToCartDirectly = function(productName, buttonElement) {
                 qty: 1 
             });
         }
-
+        
         saveCart(cart);
         updateCartUI();
+        
         alert(`🌶️ ${actualName} додано!`);
 
     } catch (error) {
-        console.error("Помилка додавання:", error);
+        console.error("Помилка додавання:", error.message);
+    }
+};
+
+window.clearFullCart = function() {
+    if (confirm("Видалити всі товари з кошика?")) {
+        saveCart([]);
+        updateCartUI();
+        closeCheckout();
     }
 };
 
