@@ -163,3 +163,56 @@ window.submitOrder = async function() {
         submitBtn.innerHTML = originalText;
     }
 };
+
+// === 5. ВІДПРАВКА ВІДГУКУ ===
+window.sendReview = async function() {
+    const authorEl = document.getElementById('rev-author');
+    const textEl = document.getElementById('rev-text');
+    const btn = document.querySelector('#review-form-section .add-btn');
+    const prodName = document.getElementById('p-name')?.innerText || "Товар";
+
+    const author = authorEl?.value.trim();
+    const text = textEl?.value.trim();
+
+    if (!author || !text) {
+        alert("Заповніть, будь ласка, ім'я та текст відгуку ✍️");
+        return;
+    }
+
+    // Блокуємо кнопку
+    const originalText = btn.innerText;
+    btn.disabled = true;
+    btn.innerText = "Надсилаємо...";
+    btn.style.opacity = "0.6";
+
+    const reviewMessage = `💬 НОВИЙ ВІДГУК!\n📦 Товар: ${prodName}\n👤 Автор: ${author}\n📝 Текст: ${text}`;
+
+    try {
+        await fetch("https://script.google.com/macros/s/AKfycbzk1Yeg_GjGZ52KZCnmP2yf_i6jpR3AfwL2BxWT4HoE4VTkn1x_ksg9LuEm8PDS7GmH/exec", {
+            method: "POST", 
+            mode: "no-cors", 
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: reviewMessage })
+        });
+
+        // Успіх
+        btn.innerText = "Дякуємо! Надіслано 😊";
+        btn.style.background = "#325e34"; 
+        btn.style.opacity = "1";
+
+        // Очищаємо поля
+        authorEl.value = "";
+        textEl.value = "";
+
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.innerText = originalText;
+            btn.style.background = ""; 
+        }, 5000);
+
+    } catch (e) {
+        alert("Помилка відправки відгуку. Спробуйте пізніше.");
+        btn.disabled = false;
+        btn.innerText = originalText;
+    }
+};
