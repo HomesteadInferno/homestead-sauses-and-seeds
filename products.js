@@ -114,6 +114,7 @@ const allProducts = {
         name: "Fire Dragon Sauce",
         category: "sauces",
         price: 250,
+heatLevel: "🔥 🔥  Висока (200,000 SHU)",
         images: ["sauce1.jpg"],
         description: "Дуже гострий ферментований соус...",
         meta: {
