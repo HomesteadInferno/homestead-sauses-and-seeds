@@ -125,4 +125,10 @@ const allProducts = {
         images: ["sauce1.jpg"],
         description: "Дуже гострий ферментований соус..."
     }
+meta: {
+            count: "200мл,
+            pack: "Пет-Пляшечка",
+            year: "2026"
+        },
+
 };
