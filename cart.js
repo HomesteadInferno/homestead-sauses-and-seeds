@@ -38,21 +38,19 @@ function applyGlobalSale() {
     });
 
     const mainPriceContainer = document.getElementById('p-price');
+
 if (mainPriceContainer) {
-    // 1. Беремо ID товару з посилання (наприклад: ?id=fire-dragon-sauce)
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
-    
-    // 2. Дістаємо дані саме цього товару з нашої бази
     const currentProduct = allProducts[productId];
     
-    // 3. Визначаємо, що писати після ціни. 
-    // Якщо в мета є count — пишемо його, якщо ні — стандартно "/ шт."
+    // Визначаємо підпис (шт чи мл)
     const unitLabel = (currentProduct && currentProduct.meta && currentProduct.meta.count) 
                       ? `/ ${currentProduct.meta.count}` 
                       : `/ шт.`;
 
     const isSaleAllowed = mainPriceContainer.getAttribute('data-allow-sale') === 'true';
+    
     if (isSaleAllowed) {
         const basePrice = parseFloat(mainPriceContainer.getAttribute('data-val'));
         const newPrice = Math.round(basePrice * (1 - discount / 100));
@@ -62,8 +60,16 @@ if (mainPriceContainer) {
             <span style="color: #ffeb3b; font-weight: bold;">${newPrice.toFixed(2)} ₴</span>
             <span style="font-size: 16px; opacity: 0.6; font-weight: normal;"> ${unitLabel}</span>
         `;
-    }
-}
+    } else {
+        // ЯКЩО ЗНИЖКИ НЕМАЄ — виводимо просто ціну, але з правильним підписом
+        const basePrice = parseFloat(mainPriceContainer.getAttribute('data-val')) || 0;
+        mainPriceContainer.innerHTML = `
+            <span style="color: #ffeb3b; font-weight: bold;">${basePrice.toFixed(2)} ₴</span>
+            <span style="font-size: 16px; opacity: 0.6; font-weight: normal;"> ${unitLabel}</span>
+        `;
+    } 
+} // Закриваємо if (mainPriceContainer)
+
 
 
             if (mainAddToCartBtn) mainAddToCartBtn.setAttribute('data-price', newPrice);
