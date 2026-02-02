@@ -11,58 +11,6 @@
     <link rel="stylesheet" href="style.css"> 
     <script type="application/ld+json" id="product-schema"></script>
     
-    <style>
-        /* Весь твій CSS код залишається без змін */
-        :root { --primary-orange: #d6603a; --text-color: #eaddcf; --sidebar-bg: rgba(20, 15, 10, 0.9); --cart-bg: #2a1f18; --modal-overlay: rgba(0, 0, 0, 0.9); }
-        body { margin: 0; font-family: 'Roboto Slab', serif; color: var(--text-color); background: #1a100a no-repeat center center fixed; background-size: cover; }
-        .overlay { background: linear-gradient(to bottom, rgba(30,18,10,0.96), rgba(40,25,15,0.85)); min-height: 100vh; }
-        .container { max-width: 1300px; margin: 0 auto; padding: 0 20px; }
-        header { padding: 25px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px; position: relative; z-index: 100; }
-        .logo-small { max-width: 180px; height: auto; }
-        .cart-wrapper { position: relative; }
-        .cart-icon-btn { background: none; border: none; cursor: pointer; padding: 10px; position: relative; }
-        .cart-icon-svg { width: 30px; height: 30px; fill: var(--primary-orange); transition: 0.3s; }
-        .cart-badge { position: absolute; top: 0; right: 0; background: #d64520; color: white; font-size: 11px; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        .cart-dropdown { position: absolute; top: 100%; right: 0; width: 320px; background: var(--cart-bg); border: 1px solid var(--primary-orange); padding: 20px; display: none; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
-        .cart-wrapper:hover .cart-dropdown { display: block; }
-        .cart-items-list { max-height: 250px; overflow-y: auto; margin-bottom: 15px; }
-        .main-grid { display: grid; grid-template-columns: 240px 1fr; gap: 60px; }
-        .sidebar h3 { font-family: 'Playfair Display', serif; color: var(--primary-orange); text-transform: uppercase; border-bottom: 1px solid #44332a; padding-bottom: 10px; }
-        .sidebar ul { list-style: none; padding: 0; }
-        .sidebar li { margin-bottom: 15px; }
-        .sidebar a { text-decoration: none; color: var(--text-color); font-size: 14px; text-transform: uppercase; transition: 0.3s; opacity: 0.8; }
-        .sidebar a:hover { color: var(--primary-orange); opacity: 1; padding-left: 5px; }
-        .product-page { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .main-img-wrap img { width: 100%; height: 450px; object-fit: cover; border: 1px solid #33251e; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .thumbs-grid { display: flex; gap: 10px; margin-top: 15px; }
-        .thumb-img { width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.3s; }
-        .thumb-img.active { border-color: var(--primary-orange); opacity: 1; }
-        .product-info h1 { font-family: 'Playfair Display', serif; font-size: 42px; margin: 0 0 10px; }
-        .price-big { font-size: 32px; font-weight: bold; margin: 20px 0; color: #fff; }
-        .heat-tag { color: var(--primary-orange); font-weight: bold; margin-bottom: 20px; display: block; text-transform: uppercase; }
-        .add-btn { background: var(--primary-orange); color: white; border: none; width: 100%; padding: 20px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; font-size: 16px; }
-        .add-btn:hover { background: #f0744a; transform: translateY(-2px); }
-        .main-img-wrap { position: relative; }
-        .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.4); color: white; border: none; padding: 20px 10px; cursor: pointer; font-size: 24px; transition: 0.3s; z-index: 5; display: flex; align-items: center; justify-content: center; }
-        .nav-arrow:hover { background: var(--primary-orange); }
-        .nav-arrow.left { left: 0; border-radius: 0 4px 4px 0; }
-        .nav-arrow.right { right: 0; border-radius: 4px 0 0 4px; }
-        .modal { display: none; position: fixed; top:0; left:0; width: 100%; height: 100%; background: var(--modal-overlay); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(8px); }
-        .modal-box { background: #231a14; width: 95%; max-width: 900px; padding: 40px; border: 1px solid var(--primary-orange); position: relative; display: grid; grid-template-columns: 1fr 300px; gap: 40px; }
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 30px; cursor: pointer; color: #888; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; background: #1a120e; border: 1px solid #44332a; color: white; padding: 12px; border-radius: 4px; transition: border-color 0.3s, box-shadow 0.3s; }
-        .form-group input:focus, .form-group select:focus { border-color: var(--primary-orange); box-shadow: 0 0 8px rgba(214, 96, 58, 0.3); outline: none; }
-        .form-side h2 { border-bottom: 2px solid var(--primary-orange); display: inline-block; margin-bottom: 25px; padding-bottom: 5px; }
-        .order-summary { background: rgba(0,0,0,0.3); padding: 20px; border: 1px dashed #44332a; }
-        #success-msg { text-align: center; grid-column: span 2; display: none; padding: 40px 0; }
-        @media (max-width: 900px) { .main-grid, .product-page, .modal-box { grid-template-columns: 1fr; } .sidebar {
-        display: block !important; /* Переконайся, що він видимий */
-    } }
-        .floating-cart { position: fixed; bottom: 30px; right: 30px; background: var(--primary-orange); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 1000; transition: transform 0.3s ease; cursor: pointer; }
-        .floating-cart:hover { transform: scale(1.1); }
-        .cart-icon { font-size: 28px; }
-        /* Твій CSS кінець */
-    </style>
 </head>
 <body>
 
