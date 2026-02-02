@@ -150,15 +150,24 @@ window.removeFromCart = function(index) {
 window.addToCart = function(productId, price, name, qty = 1) {
     let cart = getFreshCart();
     
-    // Шукаємо за ім'ям (або краще за ID, якщо додасте його в об'єкт кошика)
-    const existing = cart.find(item => item.name.trim() === name.trim());
+    // 1. Шукаємо товар за ID (це найнадійніше)
+    // Якщо ID немає, використовуємо назву, приведену до нижнього регістру
+    const existing = cart.find(item => {
+        if (productId) return item.productId === productId;
+        return item.name.toLowerCase().trim() === name.toLowerCase().trim();
+    });
 
     if (existing) {
         existing.qty += qty;
-        // Оновлюємо ціну на випадок, якщо вона змінилася (акція)
         existing.price = price; 
     } else {
-        cart.push({ name: name.trim(), price, qty });
+        // Додаємо productId в об'єкт, щоб наступного разу знайти за ним
+        cart.push({ 
+            productId: productId, 
+            name: name.trim(), 
+            price: price, 
+            qty: qty 
+        });
     }
     
     saveCart(cart);
