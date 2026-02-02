@@ -443,29 +443,58 @@ window.changeImage = function(dir) {
 
 // === 5. ВІДПРАВКА ВІДГУКУ (НОВЕ) ===
 window.sendReview = async function() {
+    // 1. Знаходимо кнопку та дані
+    const btn = document.querySelector('#review-form-section .add-btn');
     const author = document.getElementById('rev-author')?.value.trim();
     const text = document.getElementById('rev-text')?.value.trim();
-    const prodName = document.getElementById('p-name')?.innerText;
+    const prodName = document.getElementById('p-name')?.innerText || "Невідомий товар";
 
+    // Перевірка
     if (!author || !text) {
         alert("Заповніть, будь ласка, ім'я та текст відгуку ✍️");
         return;
     }
 
+    // 2. Візуальне блокування кнопки
+    const originalText = btn.innerText;
+    btn.disabled = true;
+    btn.innerText = "Надсилаємо...";
+    btn.style.opacity = "0.6";
+    btn.style.cursor = "not-allowed";
+
     const reviewText = `💬 НОВИЙ ВІДГУК!\n📦 Товар: ${prodName}\n👤 Автор: ${author}\n📝 Текст: ${text}`;
 
     try {
-        // Використовуємо те саме посилання, що й для замовлень
+        // 3. Реальна відправка
         await fetch("https://script.google.com/macros/s/AKfycbzk1Yeg_GjGZ52KZCnmP2yf_i6jpR3AfwL2BxWT4HoE4VTkn1x_ksg9LuEm8PDS7GmH/exec", {
-            method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" },
+            method: "POST", 
+            mode: "no-cors", 
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: reviewText })
         });
-        
-        alert("Дякуємо! Відгук надіслано на модерацію. 😊");
+
+        // 4. Успіх: міняємо вигляд кнопки
+        btn.innerText = "Дякуємо! Надіслано 😊";
+        btn.style.background = "#325e34"; 
+        btn.style.opacity = "1";
+
+        // Очищаємо поля
         document.getElementById('rev-author').value = '';
         document.getElementById('rev-text').value = '';
+
+        // 5. Повертаємо кнопку в норму через 5 секунд
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.innerText = originalText;
+            btn.style.background = ""; 
+            btn.style.cursor = "pointer";
+        }, 5000);
+
     } catch (e) {
         alert("Помилка відправки. Напишіть нам у Telegram!");
+        btn.disabled = false;
+        btn.innerText = originalText;
+        btn.style.opacity = "1";
     }
 };
 
