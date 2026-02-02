@@ -243,6 +243,13 @@ body {
     padding: 10px;
 }
 
+/* Колір для активного посилання */
+.sidebar nav ul li a.active {
+    color: var(--primary-orange) !important;
+    font-weight: bold;
+    padding-left: 10px; /* Трохи змістимо, щоб було помітніше */
+}
+
 /* Теги (наприклад: 🔥 Гостро) */
 .product-tag {
     font-size: 10px;
@@ -289,7 +296,25 @@ body {
     color: var(--primary-orange);
 }
 
+@media (max-width: 1000px) {
+    .sidebar {
+        position: static; /* Щоб меню не "плавало" на мобілці */
+        width: 100%;
+        box-sizing: border-box;
+    }
 
+    .sidebar-rec-wrapper, #review-form-section {
+        display: block !important; /* Примусово показуємо */
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    #sidebar-rec-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Робимо міні-сітку для реків на мобілці */
+        gap: 15px;
+    }
+}
 /* --- ФУТЕР --- */
         footer {
             background-color: #1a1512;
