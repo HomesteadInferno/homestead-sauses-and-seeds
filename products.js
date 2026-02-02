@@ -109,26 +109,16 @@ const allProducts = {
 
 
 
-
-
-
-
-
-
-
-
-
-    // Твої соуси...
-    "fire-dragon-sauce": {
+"fire-dragon-sauce": {
         name: "Fire Dragon Sauce",
-        category: "sauces", // Додаємо категорію
+        category: "sauces",
         price: 250,
         images: ["sauce1.jpg"],
-        description: "Дуже гострий ферментований соус..."
-    }
-meta: { 
-        count: "1 пляшка (200 мл)", // ОСЬ ТУТ твоя магія
-pack: "Пет-Бутилочка", 
-        year: "2026" 
+        description: "Дуже гострий ферментований соус...",
+        meta: { 
+            count: "1 пляшка (200 мл)", 
+            pack: "Пет-Пляшечка", 
+            year: "2026" 
+        }
     }
 };
