@@ -704,6 +704,7 @@ html, body {
     position: relative;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(180deg, #23150e 0%, #1a100a 100%) !important;
 }
 
 /* 3. Адаптуємо контейнери та сітку */
