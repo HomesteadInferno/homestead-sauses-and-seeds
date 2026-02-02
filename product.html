@@ -260,6 +260,7 @@ const displayUnit = (product.meta && product.meta.count) ? product.meta.count : 
 
 // Встановлюємо відображення
 priceEl.innerHTML = `${product.price.toFixed(2)} ₴ <span style="font-size: 16px; opacity: 0.6; font-weight: normal;">/ ${displayUnit}</span>`;
+}
 
             // -- СПЕЦИФІКАЦІЇ --
             if (product.specs) {
