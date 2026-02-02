@@ -38,39 +38,30 @@ function applyGlobalSale() {
     });
 
     const mainPriceContainer = document.getElementById('p-price');
+const mainAddToCartBtn = document.querySelector('.add-btn');
 
 if (mainPriceContainer) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
-    const currentProduct = allProducts[productId];
-    
-    // Визначаємо підпис (шт чи мл)
-    const unitLabel = (currentProduct && currentProduct.meta && currentProduct.meta.count) 
-                      ? `/ ${currentProduct.meta.count}` 
-                      : `/ шт.`;
-
     const isSaleAllowed = mainPriceContainer.getAttribute('data-allow-sale') === 'true';
     
+    // Отримуємо категорію товару (вона має бути доступна в об'єкті product на цій сторінці)
+    // Якщо змінна product недоступна, ми можемо взяти її з allProducts за ID з URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+    const product = allProducts[productId];
+    
+    // Визначаємо підпис (шт чи мл/пляшка)
+    const unitLabel = (product && product.category === 'seeds') ? '/ 5 шт.' : '/ шт.';
+
     if (isSaleAllowed) {
         const basePrice = parseFloat(mainPriceContainer.getAttribute('data-val'));
         const newPrice = Math.round(basePrice * (1 - discount / 100));
-        
         mainPriceContainer.innerHTML = `
             <span style="text-decoration: line-through; opacity: 0.5; font-size: 0.8em; margin-right: 10px; color: white;">${basePrice.toFixed(2)} ₴</span>
             <span style="color: #ffeb3b; font-weight: bold;">${newPrice.toFixed(2)} ₴</span>
-            <span style="font-size: 16px; opacity: 0.6; font-weight: normal;"> ${unitLabel}</span>
+            <span style="font-size: 16px; opacity: 0.6; font-weight: normal;">${unitLabel}</span>
         `;
-    } else {
-        // ЯКЩО ЗНИЖКИ НЕМАЄ — виводимо просто ціну, але з правильним підписом
-        const basePrice = parseFloat(mainPriceContainer.getAttribute('data-val')) || 0;
-        mainPriceContainer.innerHTML = `
-            <span style="color: #ffeb3b; font-weight: bold;">${basePrice.toFixed(2)} ₴</span>
-            <span style="font-size: 16px; opacity: 0.6; font-weight: normal;"> ${unitLabel}</span>
-        `;
-    } 
-} // Закриваємо if (mainPriceContainer)
-
-
+    }
+}
 
             if (mainAddToCartBtn) mainAddToCartBtn.setAttribute('data-price', newPrice);
         } else if (mainAddToCartBtn) {
