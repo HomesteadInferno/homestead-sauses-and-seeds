@@ -150,18 +150,31 @@ window.removeFromCart = function(index) {
 window.addToCart = function(productId, price, name, qty = 1) {
     let cart = getFreshCart();
     
-    // 1. Шукаємо товар за ID (це найнадійніше)
-    // Якщо ID немає, використовуємо назву, приведену до нижнього регістру
+    // Шукаємо товар у кошику:
+    // 1. Якщо є productId - шукаємо за ним
+    // 2. АБО шукаємо за назвою (на випадок старих товарів без ID)
     const existing = cart.find(item => {
-        if (productId) return item.productId === productId;
-        return item.name.toLowerCase().trim() === name.toLowerCase().trim();
+        // Спочатку перевіряємо по ID (якщо обидва мають ID)
+        if (productId && item.productId && item.productId === productId) {
+            return true;
+        }
+        // Потім перевіряємо по назві (без врахування регістру)
+        if (item.name.toLowerCase().trim() === name.toLowerCase().trim()) {
+            return true;
+        }
+        return false;
     });
 
     if (existing) {
+        // Знайшли - просто додаємо кількість
         existing.qty += qty;
-        existing.price = price; 
+        existing.price = price;
+        // Оновлюємо productId якщо його не було
+        if (productId && !existing.productId) {
+            existing.productId = productId;
+        }
     } else {
-        // Додаємо productId в об'єкт, щоб наступного разу знайти за ним
+        // Не знайшли - додаємо новий товар
         cart.push({ 
             productId: productId, 
             name: name.trim(), 
@@ -204,8 +217,6 @@ window.addToCartDirectly = function(productId, buttonElement) {
         if (!card) throw new Error("Картку товару не знайдено");
 
         // 1. БЕРЕМО НАЗВУ З БАЗИ (products.js)
-        // Якщо переданий ID існує в базі, беремо ім'я звідти. 
-        // Якщо ні — використовуємо те, що передали (як запасний варіант).
         let actualName = (typeof allProducts !== 'undefined' && allProducts[productId]) 
                          ? allProducts[productId].name 
                          : productId;
@@ -220,24 +231,9 @@ window.addToCartDirectly = function(productId, buttonElement) {
 
         if (isNaN(cleanPrice)) throw new Error("Не вдалося розпізнати ціну");
 
-        // 3. ЛОГІКА КОШИКА
-        let cart = getFreshCart();
-        
-        // Тепер порівняння буде ідеальним, бо назва береться з одного джерела
-        const existing = cart.find(i => i.name.trim() === actualName.trim());
-        
-        if (existing) {
-            existing.qty += 1;
-        } else {
-            cart.push({ 
-                name: actualName, 
-                price: cleanPrice, 
-                qty: 1 
-            });
-        }
-        
-        saveCart(cart);
-        updateCartUI();
+        // 3. ДОДАЄМО В КОШИК через універсальну функцію
+        // Це гарантує правильний пошук і об'єднання товарів
+        addToCart(productId, cleanPrice, actualName, 1);
         
         alert(`🌶️ ${actualName} додано!`);
 
