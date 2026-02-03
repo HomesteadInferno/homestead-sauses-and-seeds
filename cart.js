@@ -346,86 +346,8 @@ window.submitOrder = async function() {
     }
 };
 
-// скрипт для динамічної сторінки товарів
-document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('catalog-container');
-    const mainGrid = document.querySelector('.products-grid');
-    if (!container || typeof allProducts === 'undefined') return;
-
-    // Дізнаємося, яку категорію хоче ця сторінка
-    const pageCategory = mainGrid ? mainGrid.getAttribute('data-category') : null; 
-
-    container.innerHTML = '';
-
-    Object.keys(allProducts).forEach(id => {
-        const product = allProducts[id];
-
-        // ЛОГІКА ФІЛЬТРАЦІЇ:
-        // Показуємо товар, якщо:
-        // 1. У сторінки немає категорії (pageCategory === null) — показуємо все
-        // 2. АБО категорія товару збігається з категорією сторінки
-        if (!pageCategory || product.category === pageCategory) {
-            
-            // Тут твій код створення cardHTML...
-            const cardHTML = `...`; 
-
-            container.insertAdjacentHTML('beforeend', cardHTML);
-        }
-    });
-});
-
-
-// ТЕГИ ДОДАЙ if (product.НАЗВАТЕГУ
-document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('catalog-container');
-    if (!container || typeof allProducts === 'undefined') return;
-
-    container.innerHTML = '';
-
-    Object.keys(allProducts).forEach(id => {
-        const product = allProducts[id];
-
-        // 1. Створюємо змінну для тегів
-        let tagsHTML = '';
-        
-        // Перевіряємо, чи є в об'єкті властивість isNew
-        if (product.isNew) {
-            tagsHTML += `<span class="product-tag" style="background: #4caf50; color: white;">NEW</span>`;
-        }
-        
-        // Можна додати ще умов, наприклад для гостроти
-        if (product.isHot) {
-            tagsHTML += `<span class="product-tag" style="background: #ff5722; color: white;">🔥 HOT</span>`;
-        }
-
-        if (product.isCitrus) {
-            tagsHTML += `<span class="product-tag" style="background: #ff5722; color: white;">🍋 Цитрусові нотки</span>`;
-        }
-
-        const cardHTML = `
-            <a href="product.html?id=${id}" class="product-card" data-id="${id}">
-                <div class="product-tags">
-                    ${tagsHTML}
-                </div>
-                <div class="img-container">
-                    <img src="${product.images[0]}" alt="${product.name}">
-                </div>
-                <div class="product-label">
-                    <h3 class="p-name">${product.name}</h3>
-                    <div class="price-row">
-                        <p class="card-price">${product.price} ₴</p>
-                        <button class="quick-add-btn" 
-                                onclick="event.stopPropagation(); event.preventDefault(); addToCartDirectly('${id}', this); return false;">
-                            🛒
-                        </button>
-                    </div>
-                </div>
-            </a>
-        `;
-
-        container.insertAdjacentHTML('beforeend', cardHTML);
-    });
-});
+// Код генерації каталогу перенесено в catalog.js
+// (щоб уникнути дублювання функцій)
 
 // === ГАЛЕРЕЯ ТА ЗАПУСК ===
 let currentImgIndex = 0; // Додаємо індекс для відстеження фото
@@ -510,9 +432,6 @@ window.sendReview = async function() {
 document.addEventListener('DOMContentLoaded', updateCartUI);
 window.addEventListener('pageshow', updateCartUI);
 
-window.goBack = function() {
-    if (window.history.length > 1) window.history.back();
-    else window.location.href = 'index.html';
-};
+// Функція goBack перенесена в catalog.js
 
 
