@@ -190,8 +190,11 @@ window.pushToCart = function() {
     
     const qty = parseInt(qtyEl.value) || 1;
     const name = nameEl.innerText;
+    
+    // Використовуємо currentProductId з product-page.js (якщо є)
+    const productId = typeof currentProductId !== 'undefined' ? currentProductId : null;
 
-    addToCart(null, price, name, qty);
+    addToCart(productId, price, name, qty);
     alert("Додано у кошик! 🌶️");
 };
 

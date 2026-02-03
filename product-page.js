@@ -1,10 +1,16 @@
 // ===== ЛОГІКА СТОРІНКИ ТОВАРУ (product.html) =====
 
+// Глобальна змінна для ID товару (потрібна для кошика)
+let currentProductId = null;
+
 document.addEventListener('DOMContentLoaded', () => {
     // Отримуємо ID товару з URL (наприклад: product.html?id=habaneroredsavina)
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
     const product = allProducts[productId];
+    
+    // Зберігаємо ID глобально
+    currentProductId = productId;
 
     if (product) {
         // ===== 1. SEO (для Google та соцмереж) =====
