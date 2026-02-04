@@ -25,8 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (product.isHot) {
                     tagsHTML += '<span class="product-tag hot">🔥 HOT</span>';
                 }
-                if (product.isCitrus) {
-                    tagsHTML += '<span class="product-tag citrus">🍋 Цитрус</span>';
+                // Універсальний тег для смаків
+if (product.isFlavor) {
+    // Беремо текст прямо з властивості isFlavor
+    tagsHTML += `<span class="product-tag flavor">${product.isFlavor}</span>`;
                 }
 
                 // Створюємо картку товару

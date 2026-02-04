@@ -4,6 +4,13 @@
 let currentProductId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Перевіряємо чи це взагалі сторінка товару
+    const productPage = document.querySelector('.product-page');
+    if (!productPage) {
+        // Це не сторінка товару, нічого не робимо
+        return;
+    }
+    
     // Отримуємо ID товару з URL (наприклад: product.html?id=habaneroredsavina)
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
@@ -34,14 +41,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const schemaData = {
             "@context": "https://schema.org/",
             "@type": "Product",
-            "name": product.name,
+            "name":product.searchName ? `${product.name} (${product.searchName})` : product.name,
             "image": product.images,
             "description": product.description.replace(/<[^>]*>/g, ''),
+            "brand": {
+            "@type": "Brand",
+            "name": "Homestead Farm"
+             },
             "offers": {
                 "@type": "Offer",
                 "priceCurrency": "UAH",
                 "price": product.price,
-                "availability": "https://schema.org/InStock"
+                "availability": "https://schema.org/InStock",
+                "url": window.location.href
             }
         };
         
@@ -100,6 +112,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const tipText = tipsEl.querySelector('i');
             if (tipText) tipText.innerText = `* ${product.growTip}`;
         }
+
+        // Оновлюємо keywords для пошукових систем
+const keywordsEl = document.getElementById('meta-keywords');
+if (keywordsEl) {
+    // Збираємо все в одну купу: назву, категорію та наш новий searchName
+    const keys = [product.name, product.category, product.searchName].filter(Boolean);
+    keywordsEl.content = keys.join(', ');
+}
 
         // ===== 7. ГАЛЕРЕЯ ФОТОГРАФІЙ =====
         const mainImg = document.getElementById('main-view');
@@ -165,8 +185,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } else {
         // ===== ТОВАР НЕ ЗНАЙДЕНО =====
-        document.querySelector('.product-page').innerHTML = 
-            '<h2 style="grid-column: span 2; text-align: center; padding: 50px;">Товар не знайдено 😕 <br><a href="index.html" class="add-btn" style="display:inline-block; width:auto; margin-top:20px;">Повернутися в каталог</a></h2>';
+        const productPage = document.querySelector('.product-page');
+        if (productPage) {
+            productPage.innerHTML = 
+                '<h2 style="grid-column: span 2; text-align: center; padding: 50px;">Товар не знайдено 😕 <br><a href="index.html" class="add-btn" style="display:inline-block; width:auto; margin-top:20px;">Повернутися в каталог</a></h2>';
+        }
     }
 });
 

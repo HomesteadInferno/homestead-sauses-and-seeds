@@ -318,15 +318,61 @@ h1 {
 .sale-badge { background: #e74c3c; }
 .hot-badge { background: linear-gradient(45deg, #ff4d00, #ffcc00); border-radius: 50px; }
 
-/* Теги (гострота тощо) */
+/* Базовий стиль для всіх тегів */
 .product-tag {
-    font-size: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffeb3b;
-    padding: 2px 6px;
-    border-radius: 4px;
     display: inline-block;
+    padding: 3px 10px;
+    border-radius: 50px; /* Округлі "пігулки" виглядають сучасніше */
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
     margin-bottom: 5px;
+}
+
+/* 🔥 ГАРЯЧИЙ ГРАДІЄНТ */
+.product-tag.hot {
+    background: linear-gradient(45deg, #d32f2f, #f44336, #ff9800);
+    background-size: 200% auto;
+    animation: fire-move 3s linear infinite;
+}
+
+/* ✨ НОВИНКА */
+.product-tag.new {
+    background: linear-gradient(45deg, #2e7d32, #66bb6a);
+}
+
+/* 🍋 ЦИТРУС / СМАКИ */
+.product-tag.flavor {
+    /* Твій обраний градієнт */
+    background: linear-gradient(45deg, #FF9A00, #FF4D00, #00B4D8);
+    background-size: 150% 150%;
+    
+    /* Трішки магії для об'єму */
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 3px 10px rgba(255, 77, 0, 0.3);
+    
+    /* Текст робимо максимально чітким */
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    
+    /* Плавна анімація переливу */
+    animation: flavor-glow 4s ease infinite;
+}
+
+@keyframes flavor-glow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Анімація для вогню */
+@keyframes fire-move {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Швидка кнопка "Додати" на картці */

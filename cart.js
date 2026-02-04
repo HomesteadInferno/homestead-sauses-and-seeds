@@ -428,9 +428,19 @@ window.sendReview = async function() {
     }
 };
 
+
+
 document.addEventListener('DOMContentLoaded', updateCartUI);
 window.addEventListener('pageshow', updateCartUI);
 
-// Функція goBack перенесена в catalog.js
+// Функція goBack перенесена в catalog.js// Функція для кнопки "Назад"
+function goBack() {
+    if (window.history.length > 1) {
+        window.history.back();
+    } else {
+        window.location.href = 'index.html';
+    }
+}
+
 
 
