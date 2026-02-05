@@ -7,6 +7,28 @@ const GLOBAL_SETTINGS = {
     promoText: "ПЕКЕЛЬНИЙ ТИЖДЕНЬ: -10%!"
 };
 
+// ===== ФУНКЦІЯ ЗАХИСТУ ВІД XSS АТАК =====
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// ===== ВАЛІДАЦІЯ ЦІН (ЗАХИСТ ВІД МАНІПУЛЯЦІЙ) =====
+function validatePrice(productId, price) {
+    // Перевіряємо чи ціна збігається з базою
+    if (typeof allProducts !== 'undefined' && allProducts[productId]) {
+        const realPrice = allProducts[productId].price;
+        // Допускаємо невелику похибку для знижок
+        if (Math.abs(price - realPrice) > realPrice * 0.5) {
+            console.warn('⚠️ Підозріла ціна для', productId, '- очікувалось:', realPrice, 'отримано:', price);
+            return realPrice; // Повертаємо правильну ціну
+        }
+    }
+    return price;
+}
+
 function applyGlobalSale() {
     if (!GLOBAL_SETTINGS || !GLOBAL_SETTINGS.isSaleActive) return;
     const discount = GLOBAL_SETTINGS.discountPercent;
@@ -88,11 +110,11 @@ function updateCartUI() {
             container.innerHTML = cart.map((item, index) => `
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); color: #eaddcf;">
                     <div style="flex: 1;">
-                        <div style="font-size: 14px; font-weight: bold;">${item.name}</div>
-                        <div style="font-size: 11px; opacity: 0.7;">${item.qty} шт. x ${item.price} ₴</div>
+                        <div style="font-size: 14px; font-weight: bold;">${escapeHtml(item.name)}</div>
+                        <div style="font-size: 11px; opacity: 0.7;">${parseInt(item.qty)} шт. x ${parseFloat(item.price).toFixed(2)} ₴</div>
                     </div>
                     <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-weight: bold; font-size: 14px;">${(item.price * item.qty).toFixed(2)} ₴</span>
+                        <span style="font-weight: bold; font-size: 14px;">${(parseFloat(item.price) * parseInt(item.qty)).toFixed(2)} ₴</span>
                         <button onclick="removeFromCart(${index})" style="background: none; border: none; color: #ff4d4d; cursor: pointer; font-size: 18px;">&times;</button>
                     </div>
                 </div>
@@ -150,6 +172,10 @@ window.removeFromCart = function(index) {
 window.addToCart = function(productId, price, name, qty = 1) {
     let cart = getFreshCart();
     
+    // ЗАХИСТ: Валідуємо ціну
+    const validatedPrice = validatePrice(productId, parseFloat(price));
+    const validatedQty = Math.max(1, Math.min(100, parseInt(qty))); // Від 1 до 100
+    
     // Шукаємо товар у кошику:
     // 1. Якщо є productId - шукаємо за ним
     // 2. АБО шукаємо за назвою (на випадок старих товарів без ID)
@@ -167,8 +193,8 @@ window.addToCart = function(productId, price, name, qty = 1) {
 
     if (existing) {
         // Знайшли - просто додаємо кількість
-        existing.qty += qty;
-        existing.price = price;
+        existing.qty = Math.min(existing.qty + validatedQty, 100); // Максимум 100 шт
+        existing.price = validatedPrice;
         // Оновлюємо productId якщо його не було
         if (productId && !existing.productId) {
             existing.productId = productId;
@@ -177,9 +203,9 @@ window.addToCart = function(productId, price, name, qty = 1) {
         // Не знайшли - додаємо новий товар
         cart.push({ 
             productId: productId, 
-            name: name.trim(), 
-            price: price, 
-            qty: qty 
+            name: name.trim().substring(0, 200), // Обмежуємо довжину назви
+            price: validatedPrice, 
+            qty: validatedQty 
         });
     }
     
@@ -252,6 +278,16 @@ window.clearFullCart = function() {
 
 // === 4. ВІДПРАВКА ЗАМОВЛЕННЯ ===
 window.submitOrder = async function() {
+    // ЗАХИСТ ВІД БОТІВ: Honeypot перевірка
+    const honeypot = document.getElementById('website_url');
+    if (honeypot && honeypot.value !== '') {
+        // Бот заповнив приховане поле - ігноруємо замовлення
+        console.warn('🤖 Бот виявлено');
+        alert("Дякуємо за замовлення! Ми з вами зв'яжемося.");
+        closeCheckout();
+        return;
+    }
+    
     // 1. Отримуємо посилання на поля
     const fields = {
         name: document.getElementById('cust-name'),

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
     <title>Купити крафтовий соус з суперхотів — Homestead</title>
     <meta name="description" content="Каталог екстремально гострих соусів крафтового виробництва">
     <meta name="keywords" content="насіння хабанеро, купити насіння перцю, суперхоти, superhot seeds, habanero red savina, вирощування перцю">
@@ -370,6 +370,9 @@
                 <a href="mailto:email@example.com">Email</a>
                 <a href="faq.html">Інфо</a>
             </div>
+            <div class="footer-pp">
+                    <a href="privacy.html">FAQ</a>
+                </div>
         </div>
     </footer>
 
@@ -420,6 +423,11 @@
                         <label>Коментар</label>
                         <textarea id="cust-comment"></textarea>
                     </div>
+                    <!-- HONEYPOT: Приховане поле для захисту від ботів -->
+<div class="form-group" style="position: absolute; left: -9999px; opacity: 0;">
+    <label>Веб-сайт (не заповнюйте це поле)</label>
+    <input type="text" id="website_url" name="website_url" tabindex="-1" autocomplete="off">
+</div>
                 </div>
 
                 <div class="summary-side">

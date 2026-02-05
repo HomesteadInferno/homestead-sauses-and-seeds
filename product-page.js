@@ -14,7 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Отримуємо ID товару з URL (наприклад: product.html?id=habaneroredsavina)
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
-    const product = allProducts[productId];
+    if (typeof allProducts === 'undefined') {
+    console.error('База товарів не завантажена!');
+    return;
+}
     
     // Зберігаємо ID глобально
     currentProductId = productId;
