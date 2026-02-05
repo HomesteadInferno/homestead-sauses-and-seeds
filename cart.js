@@ -409,6 +409,8 @@ window.changeImage = function(dir) {
 
 // === 5. ВІДПРАВКА ВІДГУКУ (НОВЕ) ===
 window.sendReview = async function() {
+    const honey = document.getElementById('rev-honey')?.value;
+if (honey) return; // Якщо поле заповнене — це бот, просто ігноруємо
     // 1. Знаходимо кнопку та дані
     const btn = document.querySelector('#review-form-section .add-btn');
     const author = document.getElementById('rev-author')?.value.trim();

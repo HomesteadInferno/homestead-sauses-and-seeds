@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Зберігаємо ID глобально
     currentProductId = productId;
-
+    // Отримуємо конкретний об'єкт товару з нашої бази за його ID
+const product = allProducts[productId];
     if (product) {
         // ===== 1. SEO (для Google та соцмереж) =====
         document.title = `${product.name} — купити в Homestead`;
