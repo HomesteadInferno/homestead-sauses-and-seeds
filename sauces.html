@@ -4,11 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; 
+   <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self'; 
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
     font-src 'self' https://fonts.gstatic.com; 
-    script-src 'self' 'unsafe-inline'; 
+    script-src 'self' 'unsafe-inline' https://script.google.com; 
+    connect-src 'self' https://script.google.com https://script.googleusercontent.com; 
     img-src 'self' data:;">
+
     <title>Купити крафтовий соус з суперхотів — Homestead</title>
     <meta name="description" content="Каталог екстремально гострих соусів крафтового виробництва">
     <meta name="keywords" content="насіння хабанеро, купити насіння перцю, суперхоти, superhot seeds, habanero red savina, вирощування перцю">
