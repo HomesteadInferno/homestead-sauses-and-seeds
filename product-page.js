@@ -207,4 +207,36 @@ function updateView(el) {
     
     // Додаємо клас active на вибрану мініатюру
     el.classList.add('active');
+            // ===== 11. ПЕРЕВІРКА НАЯВНОСТІ (Out of Stock логіка) =====
+        const actionZone = document.getElementById('cart-action-zone');
+        if (actionZone) {
+            if (product.inStock === false) {
+                // Якщо товару немає в наявності
+                actionZone.innerHTML = `
+                    <div class="out-of-stock-container" style="
+                        background: rgba(214, 96, 58, 0.1);
+                        border: 1px dashed var(--primary-orange);
+                        padding: 20px;
+                        border-radius: 12px;
+                        text-align: center;
+                        margin-top: 20px;
+                    ">
+                        <div style="font-size: 24px; margin-bottom: 10px;">🚧</div>
+                        <h4 style="color: var(--primary-orange); margin: 0 0 10px 0; text-transform: uppercase;">Тимчасово відсутній</h4>
+                        <p style="font-size: 14px; opacity: 0.8; line-height: 1.5; margin: 0;">
+                            Наші гноми вже варять нову порцію соусу на секретній фабриці. <br>
+                            Завітайте трохи пізніше! 🌶️
+                        </p>
+                    </div>
+                `;
+            } else {
+                // Якщо товар є — переконуємося, що кнопка активна та працює
+                actionZone.innerHTML = `
+                    <button class="add-btn" onclick="addToCart(currentProductId)" style="width: 100%; padding: 18px; font-size: 18px;">
+                        Додати у кошик 🛒
+                    </button>
+                `;
+            }
+        }
+
 }
