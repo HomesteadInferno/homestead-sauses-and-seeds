@@ -201,6 +201,34 @@ main {
     color: var(--primary-orange);
     margin-top: 0;
 }
+        /* Коли питання відкрите, додаємо йому легкий фон */
+.faq-item.active {
+    background: rgba(214, 96, 58, 0.05);
+    border-radius: 8px;
+    padding: 15px;
+    margin: 5px 0;
+    border-left: 3px solid var(--primary-orange);
+}
+
+.faq-answer {
+    /* Плавний перехід */
+    transition: all 0.4s ease;
+    padding-bottom: 10px;
+}
+.step {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 180px; /* Вирівнюємо висоту */
+    border-bottom: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.step:hover {
+    border-bottom: 2px solid var(--primary-orange);
+    background: rgba(255,255,255,0.05);
+    transform: translateY(-5px);
+}
         
     </style>
 </head>
@@ -428,19 +456,27 @@ main {
 
 
 <script>
-    // Проста функція для відкриття питань
     function toggleFaq(el) {
-        const answer = el.nextElementSibling;
-        const span = el.querySelector('span');
-        if (answer.style.display === "block") {
-            answer.style.display = "none";
-            span.innerText = "+";
-        } else {
-            answer.style.display = "block";
-            span.innerText = "-";
-        }
+    const item = el.parentElement; // Отримуємо весь блок faq-item
+    const answer = el.nextElementSibling;
+    const span = el.querySelector('span');
+    
+    // Перемикаємо видимість
+    const isOpen = answer.style.display === "block";
+    
+    answer.style.display = isOpen ? "none" : "block";
+    span.innerText = isOpen ? "+" : "-";
+    
+    // Додаємо/прибираємо клас для підсвічування
+    if (!isOpen) {
+        item.classList.add('active');
+    } else {
+        item.classList.remove('active');
     }
+    }
+    
 </script>
 </body>
 
 </html>
+
