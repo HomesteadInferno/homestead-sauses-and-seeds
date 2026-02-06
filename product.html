@@ -148,16 +148,16 @@
                     <h1 id="p-name">Завантаження...</h1>
                     
                     <div id="p-desc" style="line-height: 1.8; opacity: 0.8; margin-bottom: 20px;"></div>
-
+               
                     <div class="price-big" id="p-price" data-val="0" data-allow-sale="true">
                         0.00 <span style="font-size: 16px; opacity: 0.6; font-weight: normal;">/ 5 шт.</span>
                     </div>    
-
+                <div id="cart-action-zone">
                     <div style="display: flex; gap: 15px; margin-top: 30px;">
                         <input type="number" id="p-qty" value="1" min="1" style="width: 60px; background: #1a120e; border: 1px solid #44332a; color: white; text-align: center;">
                         <button class="add-btn" onclick="pushToCart()">Додати у кошик</button>
                     </div>
-
+                </div>
                     <div class="product-meta" style="margin-top: 25px; border-top: 1px dashed #443; padding-top: 15px;">
                         <p style="margin: 5px 0; font-size: 14px; opacity: 0.8;">
                             <strong>Кількість:</strong> <span id="meta-count"></span>
@@ -275,4 +275,5 @@
 <script src="product-page.js"></script>
 
 </body>
+
 </html>
