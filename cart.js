@@ -344,6 +344,7 @@ window.submitOrder = async function() {
 
     // Збір даних
     const orderData = {
+        id: orderID, 
         name: fields.name.value.trim(),
         phone: fields.phone.value.trim(),
         city: fields.city.value.trim(),
@@ -359,14 +360,14 @@ window.submitOrder = async function() {
     localStorage.setItem('saved_branch', orderData.branch);
 
     /// 4. Формуємо повідомлення для Telegram
-    let orderText = `🌶️ <b>НОВЕ ЗАМОВЛЕННЯ: ${orderData.id}</b>\n`;
+    let orderText = `🌶️ НОВЕ ЗАМОВЛЕННЯ: ${orderData.id}\n`;
     orderText += `👤 ${orderData.name}\n📞 ${orderData.phone}\n`;
     orderText += `📍 ${orderData.city}, ${orderData.branch}\n`;
     if (orderData.email !== "-") orderText += `📧 ${orderData.email}\n`;
     if (orderData.comment) orderText += `💬 Коментар: ${orderData.comment}\n`;
-    orderText += `\n🛒 <b>Товари:</b>\n`;
+    orderText += `\n🛒 Товари:\n`;
     orderText += cart.map(i => `- ${i.name} (${i.price}₴) x ${i.qty}`).join("\n");
-    orderText += `\n\n💰 <b>РАЗОМ: ${totalSum.toFixed(2)} ₴</b>`;
+    orderText += `\n\n💰 РАЗОМ: ${totalSum.toFixed(2)} ₴`;
 
     try {
         await fetch("https://script.google.com/macros/s/AKfycbzk1Yeg_GjGZ52KZCnmP2yf_i6jpR3AfwL2BxWT4HoE4VTkn1x_ksg9LuEm8PDS7GmH/exec", {
@@ -385,7 +386,7 @@ window.submitOrder = async function() {
                 </h2>
                 <div style="background: rgba(0,0,0,0.05); padding: 15px; border-radius: 10px; margin: 20px 0; display: inline-block;">
                     <span style="font-size: 14px; opacity: 0.7;">Номер вашого замовлення:</span><br>
-                    <strong style="font-size: 24px; color: #333; letter-spacing: 1px;">${orderData.id}</strong>
+                    <strong style="font-size: 24px; color: color: var(--primary-orange); letter-spacing: 1px;">${orderData.id}</strong>
                 </div>
                 <p>🌿 Ми зв'яжемося з Вами найближчим часом для підтвердження.</p>
                 <button class="add-btn" onclick="location.reload()" style="margin-top:20px;">На головну</button>
