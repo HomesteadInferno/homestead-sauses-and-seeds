@@ -126,3 +126,23 @@ function goBack() {
         window.location.href = 'index.html';
     }
 }
+
+// Створюємо кнопку вгору
+const topBtn = document.createElement('button');
+topBtn.innerHTML = '🌶️'; // Твоя перчинка
+topBtn.className = 'back-to-top';
+document.body.appendChild(topBtn);
+
+// Показуємо при скролі
+window.onscroll = function() {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        topBtn.style.display = "block";
+    } else {
+        topBtn.style.display = "none";
+    }
+};
+
+// Скрол вгору при кліку
+topBtn.onclick = function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
