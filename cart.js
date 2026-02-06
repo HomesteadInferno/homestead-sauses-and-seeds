@@ -283,7 +283,7 @@ function generateOrderNumber() {
     const year = String(now.getFullYear()).slice(-2); // 26
     // 4 випадкові символи (цифри та букви) у верхньому регістрі
     const unique = Math.random().toString(36).substring(2, 6).toUpperCase();
-    return `HS-${year}${month}-${unique}`;
+    return `HS-${year}${month}${day}-${unique}`;
 }
 // === 4. ВІДПРАВКА ЗАМОВЛЕННЯ ===
 window.submitOrder = async function() {
