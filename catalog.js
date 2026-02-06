@@ -67,35 +67,37 @@ const cardHTML = `
       container.insertAdjacentHTML('beforeend', cardHTML);
             }
         });
-// ===== 3. ЛОГІКА ФІЛЬТРАЦІЇ (ДОДАЄМО СЮДИ) =====
+// ===== 2. ЛОГІКА ФІЛЬТРАЦІЇ (4 РІВНІ) =====
         const filterButtons = document.querySelectorAll('.filter-btn');
-
-filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Керування підсвіткою кнопок
-        filterButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
         
-        const selectedHeat = btn.getAttribute('data-heat');
-        const cards = document.querySelectorAll('.product-card');
-        
-        cards.forEach(card => {
-            const productId = card.getAttribute('data-id');
-            const product = allProducts[productId];
-            
-            if (!product) return;
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Візуальне перемикання кнопок
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const selectedHeat = btn.getAttribute('data-heat'); // "all", "1", "2", "3", "4"
+                const cards = document.querySelectorAll('.product-card');
+                
+                cards.forEach(card => {
+                    const productId = card.getAttribute('data-id');
+                    const product = allProducts[productId];
+                    
+                    if (!product) return;
 
-            // Фільтрація
-            if (selectedHeat === 'all') {
-                card.style.display = 'flex';
-            } else if (String(product.heatScore) === selectedHeat) {
-                card.style.display = 'flex';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    });
-});   
+                    // Приводимо все до рядка, щоб порівняння було надійним
+                    const productHeat = String(product.heatScore || '');
+
+                    if (selectedHeat === 'all') {
+                        card.style.display = 'flex';
+                    } else if (productHeat === selectedHeat) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });  
     }
     }
 
