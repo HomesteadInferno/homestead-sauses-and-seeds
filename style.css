@@ -1033,6 +1033,50 @@ body:not(.homepage) .overlay {
     font-size: 14px;
     border-radius: 5px;
     z-index: 10;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
 
+
+/* фільтр гостроти */
+.filter-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding: 10px;
+}
+
+.filter-title {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-btn {
+    background: #2a1f19;
+    border: 1px solid #3d2b24;
+    color: #eaddcf;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.filter-btn:hover {
+    border-color: var(--primary-orange);
+}
+
+.filter-btn.active {
+    background: var(--primary-orange);
+    color: white;
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 15px rgba(214, 96, 58, 0.3);
 }
