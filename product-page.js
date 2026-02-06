@@ -29,6 +29,29 @@ document.addEventListener('DOMContentLoaded', () => {
         if (ogImage && product.images && product.images[0]) {
             ogImage.content = product.images[0];
         }
+        // ===== 11. ПЕРЕВІРКА НАЯВНОСТІ (Out of Stock логіка) =====
+        const actionZone = document.getElementById('cart-action-zone');
+        if (actionZone && product.inStock === false) {
+            // Замінюємо стандартну кнопку на повідомлення
+            actionZone.innerHTML = `
+                <div class="out-of-stock-container" style="
+                    background: rgba(214, 96, 58, 0.1);
+                    border: 1px dashed var(--primary-orange);
+                    padding: 20px;
+                    border-radius: 12px;
+                    text-align: center;
+                    margin-top: 30px;
+                    width: 100%;
+                ">
+                    <div style="font-size: 24px; margin-bottom: 10px;">🧙‍♂️</div>
+                    <h4 style="color: var(--primary-orange); margin: 0 0 10px 0; text-transform: uppercase;">Тимчасово відсутній</h4>
+                    <p style="font-size: 14px; opacity: 0.8; line-height: 1.5; margin: 0;">
+                        Наші гноми вже варять нову порцію цього вогню на секретній фабриці. <br>
+                        Завітайте трохи пізніше! 🌶️
+                    </p>
+                </div>
+            `;
+        }
 
         // JSON-LD для Google (структуровані дані)
         const schemaData = {
@@ -181,29 +204,7 @@ function updateView(el) {
     // Додаємо клас active на вибрану мініатюру
     el.classList.add('active');
 
-            // ===== 11. ПЕРЕВІРКА НАЯВНОСТІ (Out of Stock логіка) =====
-        const actionZone = document.getElementById('cart-action-zone');
-        if (actionZone && product.inStock === false) {
-            // Замінюємо стандартну кнопку на повідомлення
-            actionZone.innerHTML = `
-                <div class="out-of-stock-container" style="
-                    background: rgba(214, 96, 58, 0.1);
-                    border: 1px dashed var(--primary-orange);
-                    padding: 20px;
-                    border-radius: 12px;
-                    text-align: center;
-                    margin-top: 30px;
-                    width: 100%;
-                ">
-                    <div style="font-size: 24px; margin-bottom: 10px;">🧙‍♂️</div>
-                    <h4 style="color: var(--primary-orange); margin: 0 0 10px 0; text-transform: uppercase;">Тимчасово відсутній</h4>
-                    <p style="font-size: 14px; opacity: 0.8; line-height: 1.5; margin: 0;">
-                        Наші гноми вже варять нову порцію цього вогню на секретній фабриці. <br>
-                        Завітайте трохи пізніше! 🌶️
-                    </p>
-                </div>
-            `;
-        }
+            
     
 }
 
