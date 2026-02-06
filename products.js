@@ -44,7 +44,7 @@ heatScore: "2",
         category: "seeds",
         price: 70,
         heatLevel: "☠️ ЕКСТРЕМАЛЬНА (1,500,000+ SHU)",
-heatScore:"☠️",
+heatScore:"4",
         images: ["reaper_main.jpg", "reaper_1.jpg"],
         specs: {
             maturity: "120 днів",
