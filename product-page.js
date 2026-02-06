@@ -4,25 +4,14 @@
 let currentProductId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Перевіряємо чи це взагалі сторінка товару
-    const productPage = document.querySelector('.product-page');
-    if (!productPage) {
-        // Це не сторінка товару, нічого не робимо
-        return;
-    }
-    
     // Отримуємо ID товару з URL (наприклад: product.html?id=habaneroredsavina)
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
-    if (typeof allProducts === 'undefined') {
-    console.error('База товарів не завантажена!');
-    return;
-}
+    const product = allProducts[productId];
     
     // Зберігаємо ID глобально
     currentProductId = productId;
-    // Отримуємо конкретний об'єкт товару з нашої бази за його ID
-const product = allProducts[productId];
+
     if (product) {
         // ===== 1. SEO (для Google та соцмереж) =====
         document.title = `${product.name} — купити в Homestead`;
@@ -45,19 +34,14 @@ const product = allProducts[productId];
         const schemaData = {
             "@context": "https://schema.org/",
             "@type": "Product",
-            "name":product.searchName ? `${product.name} (${product.searchName})` : product.name,
+            "name": product.name,
             "image": product.images,
             "description": product.description.replace(/<[^>]*>/g, ''),
-            "brand": {
-            "@type": "Brand",
-            "name": "Homestead Farm"
-             },
             "offers": {
                 "@type": "Offer",
                 "priceCurrency": "UAH",
                 "price": product.price,
-                "availability": "https://schema.org/InStock",
-                "url": window.location.href
+                "availability": "https://schema.org/InStock"
             }
         };
         
@@ -116,14 +100,6 @@ const product = allProducts[productId];
             const tipText = tipsEl.querySelector('i');
             if (tipText) tipText.innerText = `* ${product.growTip}`;
         }
-
-        // Оновлюємо keywords для пошукових систем
-const keywordsEl = document.getElementById('meta-keywords');
-if (keywordsEl) {
-    // Збираємо все в одну купу: назву, категорію та наш новий searchName
-    const keys = [product.name, product.category, product.searchName].filter(Boolean);
-    keywordsEl.content = keys.join(', ');
-}
 
         // ===== 7. ГАЛЕРЕЯ ФОТОГРАФІЙ =====
         const mainImg = document.getElementById('main-view');
@@ -189,11 +165,8 @@ if (keywordsEl) {
 
     } else {
         // ===== ТОВАР НЕ ЗНАЙДЕНО =====
-        const productPage = document.querySelector('.product-page');
-        if (productPage) {
-            productPage.innerHTML = 
-                '<h2 style="grid-column: span 2; text-align: center; padding: 50px;">Товар не знайдено 😕 <br><a href="index.html" class="add-btn" style="display:inline-block; width:auto; margin-top:20px;">Повернутися в каталог</a></h2>';
-        }
+        document.querySelector('.product-page').innerHTML = 
+            '<h2 style="grid-column: span 2; text-align: center; padding: 50px;">Товар не знайдено 😕 <br><a href="index.html" class="add-btn" style="display:inline-block; width:auto; margin-top:20px;">Повернутися в каталог</a></h2>';
     }
 });
 
@@ -207,36 +180,30 @@ function updateView(el) {
     
     // Додаємо клас active на вибрану мініатюру
     el.classList.add('active');
+
             // ===== 11. ПЕРЕВІРКА НАЯВНОСТІ (Out of Stock логіка) =====
         const actionZone = document.getElementById('cart-action-zone');
-        if (actionZone) {
-            if (product.inStock === false) {
-                // Якщо товару немає в наявності
-                actionZone.innerHTML = `
-                    <div class="out-of-stock-container" style="
-                        background: rgba(214, 96, 58, 0.1);
-                        border: 1px dashed var(--primary-orange);
-                        padding: 20px;
-                        border-radius: 12px;
-                        text-align: center;
-                        margin-top: 20px;
-                    ">
-                        <div style="font-size: 24px; margin-bottom: 10px;">🚧</div>
-                        <h4 style="color: var(--primary-orange); margin: 0 0 10px 0; text-transform: uppercase;">Тимчасово відсутній</h4>
-                        <p style="font-size: 14px; opacity: 0.8; line-height: 1.5; margin: 0;">
-                            Наші гноми вже варять нову порцію соусу на секретній фабриці. <br>
-                            Завітайте трохи пізніше! 🌶️
-                        </p>
-                    </div>
-                `;
-            } else {
-                // Якщо товар є — переконуємося, що кнопка активна та працює
-                actionZone.innerHTML = `
-                    <button class="add-btn" onclick="addToCart(currentProductId)" style="width: 100%; padding: 18px; font-size: 18px;">
-                        Додати у кошик 🛒
-                    </button>
-                `;
-            }
+        if (actionZone && product.inStock === false) {
+            // Замінюємо стандартну кнопку на повідомлення
+            actionZone.innerHTML = `
+                <div class="out-of-stock-container" style="
+                    background: rgba(214, 96, 58, 0.1);
+                    border: 1px dashed var(--primary-orange);
+                    padding: 20px;
+                    border-radius: 12px;
+                    text-align: center;
+                    margin-top: 30px;
+                    width: 100%;
+                ">
+                    <div style="font-size: 24px; margin-bottom: 10px;">🧙‍♂️</div>
+                    <h4 style="color: var(--primary-orange); margin: 0 0 10px 0; text-transform: uppercase;">Тимчасово відсутній</h4>
+                    <p style="font-size: 14px; opacity: 0.8; line-height: 1.5; margin: 0;">
+                        Наші гноми вже варять нову порцію цього вогню на секретній фабриці. <br>
+                        Завітайте трохи пізніше! 🌶️
+                    </p>
+                </div>
+            `;
         }
-
+    
 }
+
