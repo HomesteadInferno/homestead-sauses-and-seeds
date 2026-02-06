@@ -1085,7 +1085,8 @@ body:not(.homepage) .overlay {
     display: none;
     position: fixed;
     bottom: 30px;
-    right: 30px;
+    right: auto; /* Скасовуємо правий край */
+    left: 30px;  /* Ставимо лівий */
     z-index: 99;
     border: none;
     outline: none;
