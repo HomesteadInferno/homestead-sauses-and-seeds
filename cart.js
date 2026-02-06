@@ -278,8 +278,9 @@ window.clearFullCart = function() {
 // ===== ГЕНЕРАТОР НОМЕРА ЗАМОВЛЕННЯ =====
 function generateOrderNumber() {
     const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0'); // Додаємо день (наприклад, 06)
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Місяць (02)
     const year = String(now.getFullYear()).slice(-2); // 26
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // 02
     // 4 випадкові символи (цифри та букви) у верхньому регістрі
     const unique = Math.random().toString(36).substring(2, 6).toUpperCase();
     return `HS-${year}${month}-${unique}`;

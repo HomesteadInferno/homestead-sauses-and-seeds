@@ -32,24 +32,38 @@ if (product.isFlavor) {
                 }
 
                 // Створюємо картку товару
-                const cardHTML = `
-                    <a href="product.html?id=${id}" class="product-card" data-id="${id}">
-                        <div class="product-tags">${tagsHTML}</div>
-                        <div class="img-container">
-                            <img src="${product.images[0]}" alt="${product.name}">
-                        </div>
-                        <div class="product-label">
-                            <h3 class="p-name">${product.name}</h3>
-                            <div class="price-row">
-                                <p class="card-price">${product.price} ₴</p>
-                                <button class="quick-add-btn" 
-                                        onclick="event.stopPropagation(); event.preventDefault(); addToCartDirectly('${id}', this); return false;">
-                                    🛒
-                                </button>
-                            </div>
-                        </div>
-                    </a>
-                `;
+                // Перевіряємо наявність (якщо в базі не вказано, вважаємо що є - true)
+const isInStock = product.inStock !== false; 
+
+// Створюємо картку товару
+const cardHTML = `
+    <a href="${isInStock ? `product.html?id=${id}` : '#'}" 
+       class="product-card ${isInStock ? '' : 'out-of-stock'}" 
+       data-id="${id}"
+       ${!isInStock ? 'onclick="return false;"' : ''}>
+        
+        <div class="product-tags">${tagsHTML}</div>
+        
+        <div class="img-container">
+            <img src="${product.images[0]}" alt="${product.name}">
+        </div>
+        
+        <div class="product-label">
+            <h3 class="p-name">${product.name}</h3>
+            <div class="price-row">
+                <p class="card-price">${product.price} ₴</p>
+                ${isInStock ? `
+                    <button class="quick-add-btn" 
+                            onclick="event.stopPropagation(); event.preventDefault(); addToCartDirectly('${id}', this); return false;">
+                        🛒
+                    </button>
+                ` : `
+                    <span style="font-size: 12px; color: #888;">Відсутній</span>
+                `}
+            </div>
+        </div>
+    </a>
+`;
                 container.insertAdjacentHTML('beforeend', cardHTML);
             }
         });

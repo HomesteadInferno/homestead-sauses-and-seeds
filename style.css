@@ -967,3 +967,69 @@ body:not(.homepage) .overlay {
         font-size: 14px;
     }
 }
+.features-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 80px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    margin-top: 50px;
+}
+.feature-item {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.3s;
+}
+.feature-item:hover {
+    transform: translateY(-10px);
+}
+.feature-icon {
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+.feature-item h3 {
+    color: var(--primary-orange);
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+.feature-item p {
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .features-grid {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+}
+.feature-icon {
+    text-shadow: 0 0 15px var(--primary-orange);
+}
+/* Стиль для товарів, яких немає в наявності */
+.out-of-stock {
+    filter: grayscale(0.8); /* Робимо картинку майже чорно-білою */
+    opacity: 0.6;           /* Робимо картку напівпрозорою */
+    pointer-events: none;    /* Вимикаємо можливість клікати на кнопку */
+    position: relative;
+}
+
+/* Додамо напис "Очікується" поверх картки */
+.out-of-stock::after {
+    content: "ОЧІКУЄТЬСЯ";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    background: #ff4444;
+    color: white;
+    padding: 5px 15px;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 5px;
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}

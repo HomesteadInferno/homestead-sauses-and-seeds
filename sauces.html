@@ -186,19 +186,10 @@
         grid-template-columns: 1fr;
     }
 }
-   .product-card {
-    background: rgba(255, 255, 255, 0.7); /* Напівпрозорий білий */
-    backdrop-filter: blur(10px); /* Магічне розмиття фону */
-    -webkit-backdrop-filter: blur(10px); /* Для Safari */
-    
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Тонка "скляна" межа */
-    border-radius: 15px;
-    transition: all 0.3s ease;
-}
-        .product-card:hover {
-            background: rgba(255, 255, 255, 0.9);
-    transform: translateY(-5px); /* Легке підняття при наведенні */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);;
+   .product-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-orange);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
         }
 
         .img-container {
