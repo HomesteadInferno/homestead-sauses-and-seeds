@@ -37,34 +37,34 @@ const isInStock = product.inStock !== false;
 
 // Створюємо картку товару
 const cardHTML = `
-    <a href="${isInStock ? `product.html?id=${id}` : '#'}" 
+    <a href="product.html?id=${id}" 
        class="product-card ${isInStock ? '' : 'out-of-stock'}" 
-       data-id="${id}"
-       ${!isInStock ? 'onclick="return false;"' : ''}>
+       data-id="${id}">
         
         <div class="product-tags">${tagsHTML}</div>
         
         <div class="img-container">
-            <img src="${product.images[0]}" alt="${product.name}">
+            <img src="${product.images[0]}" alt="${product.name}" 
+                 style="${isInStock ? '' : 'filter: grayscale(0.8); opacity: 0.7;'}">
         </div>
         
         <div class="product-label">
             <h3 class="p-name">${product.name}</h3>
             <div class="price-row">
-                <p class="card-price">${product.price} ₴</p>
+                <p class="card-price" style="${isInStock ? '' : 'opacity: 0.6;'}">${product.price} ₴</p>
                 ${isInStock ? `
                     <button class="quick-add-btn" 
                             onclick="event.stopPropagation(); event.preventDefault(); addToCartDirectly('${id}', this); return false;">
                         🛒
                     </button>
                 ` : `
-                    <span style="font-size: 12px; color: #888;">Відсутній</span>
+                    <span style="font-size: 11px; color: var(--primary-orange); border: 1px solid rgba(214, 96, 58, 0.3); padding: 2px 6px; border-radius: 4px;">ОЧІКУЄТЬСЯ</span>
                 `}
             </div>
         </div>
     </a>
 `;
-                container.insertAdjacentHTML('beforeend', cardHTML);
+      container.insertAdjacentHTML('beforeend', cardHTML);
             }
         });
     }
