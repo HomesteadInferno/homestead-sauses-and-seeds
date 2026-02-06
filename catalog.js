@@ -67,7 +67,38 @@ const cardHTML = `
       container.insertAdjacentHTML('beforeend', cardHTML);
             }
         });
+// ===== 3. ЛОГІКА ФІЛЬТРАЦІЇ (ДОДАЄМО СЮДИ) =====
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Видаляємо active у всіх, додаємо натиснутій
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const selectedHeat = btn.getAttribute('data-heat');
+                const cards = document.querySelectorAll('.product-card');
+                
+                cards.forEach(card => {
+                    const productId = card.getAttribute('data-id');
+                    const product = allProducts[productId];
+                    
+                    // Перевіряємо збіг рівня гостроти
+                    // Важливо: використовуємо == для порівняння чисел і рядків
+                    if (selectedHeat === 'all') {
+                        card.style.display = 'flex';
+                    } else if (product && String(product.heatLevel) === selectedHeat) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
     }
+    }
+
+
 
     // ===== 2. ПІДСВІТКА АКТИВНОГО ПУНКТУ МЕНЮ =====
     // Отримуємо назву поточного файлу (наприклад, "sauces.html")
