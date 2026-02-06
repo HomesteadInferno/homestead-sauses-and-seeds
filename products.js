@@ -6,6 +6,7 @@ const allProducts = {
         category: "seeds",
         price: 50,
         heatLevel: "🔥 🔥  Висока (200,000-577,000 SHU)",
+heatScore: "2",
         // Масив фото. Перше - головне.
         images: [
             "HabaneroRedSavinaCard.jpg", 
@@ -43,6 +44,7 @@ const allProducts = {
         category: "seeds",
         price: 70,
         heatLevel: "☠️ ЕКСТРЕМАЛЬНА (1,500,000+ SHU)",
+heatScore:"☠️",
         images: ["reaper_main.jpg", "reaper_1.jpg"],
         specs: {
             maturity: "120 днів",
@@ -66,7 +68,7 @@ const allProducts = {
         category: "seeds",
         price: 45,
         heatLevel: "🔥 🔥  Висока (200,000-577,000 SHU)",
-        
+        heatScore: "2",
         // Масив фото. Перше - головне.
         images: [
             "HabaneroDominicaRedCard.png", 
@@ -122,7 +124,7 @@ const allProducts = {
         category: "sauces",
         price: 250,
         heatLevel: "🔥🔥🔥 ЕКСТРЕМАЛЬНА",
-        
+        heatScore: "3",
         images: [
             "sauce1.jpg",
             "sauce1.jpg",  // Можеш додати більше фото пізніше
