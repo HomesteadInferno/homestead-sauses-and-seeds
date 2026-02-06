@@ -112,22 +112,19 @@ function displaySearchResults(results, container) {
         const isInStock = item.inStock !== false;
         
         return `
-            <a href="${isInStock ? `product.html?id=${item.id}` : '#'}" 
-               class="search-result-item ${isInStock ? '' : 'out-of-stock-result'}"
-               ${!isInStock ? 'onclick="return false;" style="opacity: 0.6; filter: grayscale(1); cursor: not-allowed;"' : ''}>
-                
-                <div class="search-result-img">
-                    <img src="${item.images[0]}" alt="${item.name}">
-                </div>
-                <div class="search-result-info">
-                    <div class="search-result-name">
-                        ${item.name} ${isInStock ? '' : '<span style="color: #ff4444; font-size: 10px; margin-left: 5px;">(НЕМАЄ)</span>'}
-                    </div>
-                    <div class="search-result-category">${categoryNames[item.category] || item.category}</div>
-                </div>
-                <div class="search-result-price">${item.price} ₴</div>
-            </a>
-        `;
+    <a href="product.html?id=${item.id}" class="search-result-item">
+        <div class="search-result-img" style="${isInStock ? '' : 'filter: grayscale(1); opacity: 0.7;'}">
+            <img src="${item.images[0]}" alt="${item.name}">
+        </div>
+        <div class="search-result-info">
+            <div class="search-result-name">
+                ${item.name} ${isInStock ? '' : '<span style="color: #ff4444; font-size: 10px; margin-left: 5px;">(ОЧІКУЄТЬСЯ)</span>'}
+            </div>
+            <div class="search-result-category">${categoryNames[item.category] || item.category}</div>
+        </div>
+        <div class="search-result-price">${item.price} ₴</div>
+    </a>
+`;
     }).join('');
     
     container.style.display = 'block';
