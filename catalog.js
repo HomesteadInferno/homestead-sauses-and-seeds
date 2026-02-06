@@ -136,7 +136,7 @@ document.body.appendChild(topBtn);
 
 // Показуємо при скролі
 window.onscroll = function() {
-    if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
+    if (document.body.scrollTop > 1 || document.documentElement.scrollTop > 1) {
         topBtn.style.display = "block";
     } else {
         topBtn.style.display = "none";
