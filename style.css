@@ -2,6 +2,9 @@
    1. ШРИФТИ ТА ЗМІННІ (НАЛАШТУВАННЯ)
    ========================================= */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto+Slab:wght@300;400;700&display=swap');
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 
 :root {
     /* Кольори */
@@ -1032,4 +1035,5 @@ body:not(.homepage) .overlay {
     border-radius: 5px;
     z-index: 10;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
 }
