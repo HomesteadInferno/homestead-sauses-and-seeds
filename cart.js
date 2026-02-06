@@ -275,7 +275,15 @@ window.clearFullCart = function() {
         closeCheckout();
     }
 };
-
+// ===== ГЕНЕРАТОР НОМЕРА ЗАМОВЛЕННЯ =====
+function generateOrderNumber() {
+    const now = new Date();
+    const year = String(now.getFullYear()).slice(-2); // 26
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // 02
+    // 4 випадкові символи (цифри та букви) у верхньому регістрі
+    const unique = Math.random().toString(36).substring(2, 6).toUpperCase();
+    return `HS-${year}${month}-${unique}`;
+}
 // === 4. ВІДПРАВКА ЗАМОВЛЕННЯ ===
 window.submitOrder = async function() {
     // ЗАХИСТ ВІД БОТІВ: Honeypot перевірка
@@ -319,16 +327,17 @@ window.submitOrder = async function() {
     }
 
     if (hasError) {
-        alert("Будь ласка, заповніть всі обов'язкові поля коректно!");
+        alert("Будь ласка, перевірте дані, підсвічені червоним 🔴");
         return;
     }
 
     // --- Далі йде ваш код відправки (він робочий) ---
     const submitBtn = document.querySelector('.summary-side .add-btn');
     const originalText = submitBtn.innerHTML;
+    // 🔥 ГЕНЕРУЄМО КРАСИВИЙ НОМЕР
+    const orderID = generateOrderNumber();
     const cart = getFreshCart();
     const totalSum = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-    const currentNum = Date.now().toString().slice(-6);
 
     submitBtn.disabled = true;
     submitBtn.innerHTML = `Відправляємо...`;
@@ -349,10 +358,15 @@ window.submitOrder = async function() {
     localStorage.setItem('saved_city', orderData.city);
     localStorage.setItem('saved_branch', orderData.branch);
 
-    // Формуємо текст повідомлення
-    let orderText = `📦 ЗАМОВЛЕННЯ №${currentNum}\n👤 ${orderData.name}\n📞 ${orderData.phone}\n📍 ${orderData.city}, ${orderData.branch}\n📧 ${orderData.email}\n💬 ${orderData.comment}\n\n🛒 Товари:\n`;
-    orderText += cart.map(i => `- ${i.name} (${i.price} ₴) x ${i.qty}`).join("\n");
-    orderText += `\n\n💰 РАЗОМ: ${totalSum.toFixed(2)} ₴`;
+    /// 4. Формуємо повідомлення для Telegram
+    let orderText = `🌶️ <b>НОВЕ ЗАМОВЛЕННЯ: ${orderData.id}</b>\n`;
+    orderText += `👤 ${orderData.name}\n📞 ${orderData.phone}\n`;
+    orderText += `📍 ${orderData.city}, ${orderData.branch}\n`;
+    if (orderData.email !== "-") orderText += `📧 ${orderData.email}\n`;
+    if (orderData.comment) orderText += `💬 Коментар: ${orderData.comment}\n`;
+    orderText += `\n🛒 <b>Товари:</b>\n`;
+    orderText += cart.map(i => `- ${i.name} (${i.price}₴) x ${i.qty}`).join("\n");
+    orderText += `\n\n💰 <b>РАЗОМ: ${totalSum.toFixed(2)} ₴</b>`;
 
     try {
         await fetch("https://script.google.com/macros/s/AKfycbzk1Yeg_GjGZ52KZCnmP2yf_i6jpR3AfwL2BxWT4HoE4VTkn1x_ksg9LuEm8PDS7GmH/exec", {
@@ -366,11 +380,16 @@ window.submitOrder = async function() {
         successMsg.style.display = 'block';
         successMsg.innerHTML = `
             <div style="padding: 40px 20px; text-align: center;">
-                <h2 style="color: #6ba86b;">🌿 Замовлення №${currentNum} прийнято!</h2>
-                <p>Дякуємо, ми скоро зв'яжемося з Вами.</p>
+                <h2 style="color: #6ba86b; font-family: 'Playfair Display', serif;">
+                    Замовлення прийнято! 🌿
+                </h2>
+                <div style="background: rgba(0,0,0,0.05); padding: 15px; border-radius: 10px; margin: 20px 0; display: inline-block;">
+                    <span style="font-size: 14px; opacity: 0.7;">Номер вашого замовлення:</span><br>
+                    <strong style="font-size: 24px; color: #333; letter-spacing: 1px;">${orderData.id}</strong>
+                </div>
+                <p>🌿 Ми зв'яжемося з Вами найближчим часом для підтвердження.</p>
                 <button class="add-btn" onclick="location.reload()" style="margin-top:20px;">На головну</button>
             </div>`;
-        
         saveCart([]);
         updateCartUI();
     } catch (e) {

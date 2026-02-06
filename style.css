@@ -401,6 +401,9 @@ h1 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
+    max-width: 1300px; 
+    margin: 0 auto;
+    width: 100%;
 }
 
 /* Галерея фото */
@@ -453,6 +456,14 @@ h1 {
     background: rgba(214, 96, 58, 0.2);
     border-color: var(--primary-orange);
     transform: translateX(-5px);
+}
+@media (max-width: 768px) {
+    .product-page {
+        grid-template-columns: 1fr; /* Одна колонка для телефонів */
+    }
+    .product-info h1 {
+        font-size: 32px; /* Трохи менший заголовок */
+    }
 }
 
 /* =========================================
