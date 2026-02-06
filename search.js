@@ -93,33 +93,42 @@ function searchProducts(query) {
     return results.slice(0, 8);
 }
 
-// Функція відображення результатів
+    // функція відображення результатів 
 function displaySearchResults(results, container) {
     if (results.length === 0) {
-        container.innerHTML = '<div class="search-no-results">Нічого не знайдено 😕</div>';
+        container.innerHTML = '<div class="search-no-results" style="padding: 15px; text-align: center; color: #888;">Нічого не знайдено 😕</div>';
         container.style.display = 'block';
         return;
     }
     
-    // Перекладаємо категорії
     const categoryNames = {
         'seeds': '🌶️ Насіння',
         'sauces': '🔥 Соус',
         'seedlings': '🌱 Розсада'
     };
     
-    container.innerHTML = results.map(item => `
-        <a href="product.html?id=${item.id}" class="search-result-item">
-            <div class="search-result-img">
-                <img src="${item.images[0]}" alt="${item.name}">
-            </div>
-            <div class="search-result-info">
-                <div class="search-result-name">${item.name}</div>
-                <div class="search-result-category">${categoryNames[item.category] || item.category}</div>
-            </div>
-            <div class="search-result-price">${item.price} ₴</div>
-        </a>
-    `).join('');
+    container.innerHTML = results.map(item => {
+        // Перевіряємо наявність
+        const isInStock = item.inStock !== false;
+        
+        return `
+            <a href="${isInStock ? `product.html?id=${item.id}` : '#'}" 
+               class="search-result-item ${isInStock ? '' : 'out-of-stock-result'}"
+               ${!isInStock ? 'onclick="return false;" style="opacity: 0.6; filter: grayscale(1); cursor: not-allowed;"' : ''}>
+                
+                <div class="search-result-img">
+                    <img src="${item.images[0]}" alt="${item.name}">
+                </div>
+                <div class="search-result-info">
+                    <div class="search-result-name">
+                        ${item.name} ${isInStock ? '' : '<span style="color: #ff4444; font-size: 10px; margin-left: 5px;">(НЕМАЄ)</span>'}
+                    </div>
+                    <div class="search-result-category">${categoryNames[item.category] || item.category}</div>
+                </div>
+                <div class="search-result-price">${item.price} ₴</div>
+            </a>
+        `;
+    }).join('');
     
     container.style.display = 'block';
 }
