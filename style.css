@@ -652,22 +652,48 @@ h1 {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* =========================================
-   9. ФУТЕР
+   ФУТЕР (ВИПРАВЛЕНО!)
    ========================================= */
 footer {
-    background-color: #1a1512;
-    border-top: 1px solid #44332a;
-    padding: 30px 0;
+    border-top: 1px solid var(--border-color);
+    padding: 40px 0 20px;
     margin-top: auto;
+    background: rgba(20, 15, 10, 0.5); /* ВИПРАВЛЕНО: виділення футера */
 }
+
 .footer-content {
-    display: flex; justify-content: space-between;
-    align-items: center; flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    align-items: start;
 }
-.footer-logo-img { max-width: 200px; height: auto; }
-.footer-links, .footer-contacts {
-    display: flex; gap: 20px; font-size: 12px;
-    text-transform: uppercase; align-items: center;
+
+.footer-logo-img {
+    width: 200px;
+    height: auto;
+}
+
+.footer-links,
+.footer-contacts,
+.footer-pp {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-links a,
+.footer-contacts a,
+.footer-pp a,
+.footer-contacts span {
+    color: var(--text-color);
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.footer-links a:hover,
+.footer-contacts a:hover,
+.footer-pp a:hover {
+    color: var(--primary-orange);
 }
 
 /* =========================================
