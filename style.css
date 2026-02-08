@@ -291,18 +291,16 @@ h1 {
 
 
 
-/* =========================================
-   5. КАРТКИ АКЦІЙ / КАТЕГОРІЙ (Promo Cards)
-   ========================================= */
+/* КАРТКИ КАТЕГОРІЙ (ВИПРАВЛЕНО!) */
 .cards-section {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
     margin: 50px 0;
-    gap: 40px;
 }
 
 .card-link {
-    display: relative;
+    position: relative;
     overflow: hidden;
     border-radius: 15px;
     transition: 0.3s;
@@ -310,6 +308,7 @@ h1 {
     display: block;
     aspect-ratio: 1 / 1; /* Однакова висота */
 }
+
 .card-link:hover {
     transform: translateY(-10px);
     box-shadow: 0 8px 25px rgba(214, 96, 58, 0.4);
@@ -326,6 +325,7 @@ h1 {
 .card-link:hover .card-image {
     transform: scale(1.05);
 }
+
 .card-label {
     position: absolute;
     bottom: 20px;
