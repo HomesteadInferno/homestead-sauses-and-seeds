@@ -159,10 +159,9 @@ header {
 /* =========================================
    4. ГОЛОВНА СТОРІНКА (HERO SECION)
    ========================================= */
-.hero-text {
-    margin-top: 40px;
-    margin-bottom: 60px;
+.hero-text {
     text-align: center;
+    margin: 60px 0;
 }
 
 h1 {
@@ -205,50 +204,96 @@ h1 {
 }
 
 /* =========================================
+   ВІДЕО СЕКЦІЯ
+   ========================================= */
+.hero-banner {
+    margin: 80px 0;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+}
+
+.hero-content h2 {
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.hero-content p {
+    font-size: 20px;
+    opacity: 0.9;
+}
+
+
+/* =========================================
    5. КАРТКИ АКЦІЙ / КАТЕГОРІЙ (Promo Cards)
    ========================================= */
 .cards-section {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 50px 0;
     gap: 40px;
-    flex-wrap: wrap;
-    margin-bottom: 100px;
-    position: relative;
 }
 
 .card-link {
+    display: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     display: block;
-    width: 250px;
-    position: relative;
-    transition: transform 0.3s ease;
+    aspect-ratio: 1 / 1; /* Однакова висота */
 }
 .card-link:hover {
     transform: translateY(-10px);
-    filter: brightness(1.1);
+    box-shadow: 0 8px 25px rgba(214, 96, 58, 0.4);
 }
 
 .card-image {
     width: 100%;
-    height: 250px;
-    object-fit: cover;
+    height: 100%;
+    object-fit: cover; /* ВИПРАВЛЕНО: тепер всі картки однакові */
     display: block;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    transition: 0.3s;
 }
 
-.card-label {
-    background-color: var(--primary-orange);
-    color: #fff;
-    padding: 15px 10px;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 16px;
-    letter-spacing: 1px;
-    margin-top: -5px;
-    position: relative;
-    z-index: 2;
+.card-link:hover .card-image {
+    transform: scale(1.05);
 }
+.card-label {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 28px;
+    font-weight: 700;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    z-index: 10;
+}
+
 
 /* =========================================
    6. МАГАЗИН (СІТКА ТОВАРІВ І САЙДБАР)
@@ -657,69 +702,7 @@ footer {
 @media (max-width: 600px) {
     .back-btn { padding: 8px 14px; font-size: 13px; }
 }
-
-/* =========================================
-   БАНЕР З ВІДЕО
-   ========================================= */
-.hero-banner {
-    position: relative;
-    width: 100%;
-    height: 35vh; /* Було 60 або 50, тепер значно вужче */ /* Зробимо його трохи нижчим, щоб не перекривав весь екран посеред сторінки */
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 40px 0; /* Додаємо відступи зверху і знизу, щоб він "дихав" між блоками */
-    border-top: 1px solid rgba(255,255,255,0.1);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-hero-banner .video-container {
-    position: relative;
-    width: 100%;
-    height: 350px; /* Оптимальна висота для "вузької" рамки */
-    border-radius: 20px; /* М'які кути */
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4); /* Додасть об'єму на темному фоні */
-    border: 1px solid rgba(255,255,255,0.05); /* Ледь помітна лінія по краю */
-}
-
-.video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.bg-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Відео заповнить увесь простір без деформації */
-    filter: brightness(0.6); /* Трохи затемнюємо саме відео */
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    color: #fff;
-    padding: 0 20px;
-}
-
-.hero-content h2 {
-    font-family: 'Roboto Slab', serif;
-    font-size: 2.2rem;
-    color: var(--primary-orange); /* Або білий, якщо хочеш спокійніше */
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-}
-
-.hero-content p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    font-weight: 300;
-}
-
+
 .btn-main {
     padding: 15px 40px;
     background-color: var(--primary-orange);
