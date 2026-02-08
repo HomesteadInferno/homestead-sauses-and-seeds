@@ -247,6 +247,48 @@ h1 {
     font-size: 20px;
     opacity: 0.9;
 }
+/* ФІЧІ (ВИПРАВЛЕНО - ЦЕНТРУВАННЯ!) */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    padding: 60px 20px;
+    margin: 40px auto; /* ВИПРАВЛЕНО: auto для центру */
+    max-width: 1300px; /* ВИПРАВЛЕНО: обмеження ширини */
+}
+
+.feature-item {
+    text-align: center;
+    padding: 30px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: 0.3s;
+}
+
+.feature-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--primary-orange);
+}
+
+.feature-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px var(--primary-orange);
+}
+
+.feature-item h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: var(--primary-orange);
+}
+
+.feature-item p {
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1.6;
+}
+
 
 
 /* =========================================
