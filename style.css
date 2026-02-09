@@ -657,42 +657,65 @@ header {
     margin-bottom: 50px;
 }
 
-/* Бічне меню (Sidebar) */
+/* =========================================
+   ОНОВЛЕНИЙ SIDEBAR (МЕРДЖ)
+   ========================================= */
+
 .sidebar {
     background: var(--sidebar-bg);
     padding: 30px 20px;
     border-radius: 10px;
     height: fit-content;
-    position: sticky;
     top: 20px;
     border: 1px solid #33251e;
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Відступи між категоріями, реками та формою */
 }
 
-.sidebar h3 {
+/* Заголовки блоків у сайдбарі */
+.sidebar h3, .sidebar h4 {
     font-family: 'Playfair Display', serif;
-    color: var(--primary-color);
+    color: var(--primary-orange); /* Виправив на orange, як у твоїх змінних */
     text-transform: uppercase;
     margin-bottom: 20px;
-    border-bottom: 1px solid var(--primary-color);
+    border-bottom: 1px solid rgba(214, 96, 58, 0.3);
     padding-bottom: 10px;
     font-size: 18px;
+    letter-spacing: 1px;
+}
+.sidebar h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-orange);
+    text-transform: uppercase;
+    margin-top: 0;         /* Прибираємо відступ зверху */
+    margin-bottom: 10px;    /* Зменшили відступ від заголовка до самого списку */
+    border-bottom: 1px solid rgba(214, 96, 58, 0.3);
+    padding-bottom: 10px;
+    font-size: 18px;
+    letter-spacing: 1px;
 }
 
-.sidebar nav ul {
+/* Специфічне налаштування для першого заголовка, щоб він був впритул до верху */
+.sidebar h3:first-child {
+    margin-top: 0;
+}
+
+.sidebar ul {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0; /* Прибираємо зовнішні відступи списку */
 }
 
-.sidebar nav ul li {
-    margin-bottom: 15px;
+.sidebar li {
+    margin-bottom: 8px; /* Трохи щільніший список */
 }
 
-.sidebar nav ul li a {
+.sidebar a {
     text-decoration: none;
     color: var(--text-color);
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 1px;
     transition: 0.3s;
     display: block;
@@ -700,13 +723,39 @@ header {
     border-radius: 5px;
 }
 
-.sidebar nav ul li a:hover,
-.sidebar nav ul li a.active {
-    color: var(--primary-color);
-    background: rgba(214, 96, 58, 0.2);
-    padding-left: 15px;
+.sidebar a:hover,
+.sidebar a.active {
+    color: var(--primary-orange);
+    background: rgba(214, 96, 58, 0.1);
+    padding-left: 20px; /* Твій ефект зміщення */
 }
 
+/* --- Додаткові стилі для рекомендацій та відгуків у сайдбарі --- */
+
+.sidebar-rec-wrapper {
+    width: 100%;
+}
+
+#sidebar-rec-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#review-form-section {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#review-form-section input, 
+#review-form-section textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+}
 /* Заголовок сторінки */
 .page-title {
     font-family: 'Playfair Display', serif;
