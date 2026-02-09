@@ -1726,6 +1726,21 @@ footer {
     .step-grid {
         grid-template-columns: 1fr;
     }
+
+    .main-grid {
+        display: flex; /* Змінюємо grid на flex для легкого сортування */
+        flex-direction: column;
+    }
+
+    .product-content-wrapper {
+        order: 1; /* Товар буде першим */
+    }
+
+  
+    .sidebar, aside, .left-column { 
+        order: 2; /* Сайдбар піде вниз */
+        margin-top: 40px; /* Додамо відступ, щоб він не прилипав до товару */
+    }
 }
 
 /* Маленькі мобільні (до 480px) */
