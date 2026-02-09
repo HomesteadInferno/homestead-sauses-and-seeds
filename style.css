@@ -1748,53 +1748,45 @@ footer {
 
 @media (max-width: 768px) {
     
-    /* Сайдбар і основний контент стають один під одним */
+    /* Спільні налаштування сітки */
     .main-grid {
-        grid-template-columns: 1fr; 
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: 1fr !important; 
         gap: 20px;
     }
 
-    /* Картинка і інформація про товар стають один під одним */
-    .product-page {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-@media (max-width: 768px) {
-    /* Тільки на сторінці ТОВАРУ відправляємо сайдбар вниз */
-    .product-page-layout .main-grid {
-        display: flex;
-        flex-direction: column;
-    }
+    /* --- СТОРІНКА ТОВАРУ --- */
+    /* Товар вгору, сайдбар вниз */
     .product-page-layout .product-content-wrapper {
-        order: 1;
+        order: 1 !important;
     }
     .product-page-layout .sidebar {
-        order: 2;
+        order: 2 !important;
+        margin-top: 30px;
     }
 
-    /* На сторінці КАТЕГОРІЙ (каталогу) залишаємо стандартний порядок */
-    /* Сайдбар (фільтри/категорії) буде першим за списком у HTML і опиниться зверху */
-    .category-page-layout .main-grid {
-        display: flex;
-        flex-direction: column;
-    }
+    /* --- СТОРІНКА КАТЕГОРІЙ --- */
+    /* Категорії вгору, товари вниз */
     .category-page-layout .sidebar {
-        order: 1; /* Категорії/фільтри зверху */
+        order: 1 !important;
         margin-bottom: 20px;
     }
     .category-page-layout .product-content-wrapper {
-        order: 2; /* Товари знизу */
+        order: 2 !important;
     }
-}
 
+    /* Адаптація самої картки товару */
+    .product-page {
+        grid-template-columns: 1fr !important;
+        gap: 30px;
+    }
 
-    /* Зменшуємо висоту картинки, щоб вона не була на весь екран */
     .main-img-wrap {
-        height: auto;
-        aspect-ratio: 1 / 1; /* Тримаємо квадрат */
+        height: auto !important;
+        aspect-ratio: 1 / 1;
     }
 
-    /* Зменшуємо шрифти, щоб заголовки не "кричали" */
     .product-page-layout #p-name {
         font-size: 2rem;
     }
@@ -1803,13 +1795,9 @@ footer {
         font-size: 28px !important;
     }
 
-    /* Робимо таблицю характеристик зручнішою */
     .product-specs td {
         font-size: 13px;
     }
-
-    /* Ховаємо сайдбар або переносимо його вниз (за бажанням) */
-    /* .sidebar { order: 2; } */
 }
 
 /* =========================================
