@@ -37,25 +37,19 @@
     <script type="application/ld+json" id="product-schema"></script>
     
 </head>
-<body>
-
+<body class="product-page-layout">
 <div class="overlay">
     <div class="container">
         <header>
-             <a href="index.html">
-                 <img src="homesteadlogo.png" alt="Homestead Logo" class="logo-small">
-             </a>
-              <!-- 🔍 БЛОК ПОШУКУ -->
-     <div class="search-container" style="margin: 15px 0;">
-        <input 
-            type="text" 
-            id="search-input" 
-            placeholder="🔍 Шукати товари..."
-            autocomplete="off"
-        >
-        <span class="search-icon">🔍</span>
-        <div id="search-results"></div>
-     </div>
+            <a href="index.html">
+                <img src="homesteadlogo.png" alt="Homestead Logo" class="logo-small">
+            </a>
+            <div class="search-container" style="margin: 15px 0;">
+                <input type="text" id="search-input" placeholder="🔍 Шукати товари..." autocomplete="off">
+                <span class="search-icon">🔍</span>
+                <div id="search-results"></div>
+            </div>
+            
             <div class="cart-wrapper">
                 <button class="cart-icon-btn">
                     <svg class="cart-icon-svg" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
@@ -80,35 +74,31 @@
         </button>
 
         <div class="main-grid">
+            
             <aside class="sidebar">
+                <div class="sidebar">
                 <h3>Категорії</h3>
                 <ul>
-                    <li><a href="seedsandseedlings.html">🌶️Насіння супер-хотів</a></li>
+                    <li><a href="seedsandseedlings.html">🌶️ Насіння супер-хотів</a></li>
                     <li><a href="sauces.html">🔥 Крафтові Соуси</a></li>
                     <li><a href="otherseeds.html">🌱 Інше насіння</a></li>
                 </ul>
-                <div class="sidebar-rec-wrapper" style="margin-top: 50px;">
-        <h3 style="font-size: 16px; margin-bottom: 20px;">🔥 Рекомендуємо</h3>
-        <div id="sidebar-rec-grid">
-            </div>
-            <div id="review-form-section" style="margin-top: 50px; padding: 25px; background: rgba(255,255,255,0.03); border: 1px solid #33251e;">
-    <h4 style="color: var(--primary-orange); margin-top: 0;">Залишити відгук про цей сорт</h4>
-    
-    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
-        <input type="text" id="rev-author" placeholder="Ваше ім'я" 
-               style="background: #1a100a; border: 1px solid #44332a; color: white; padding: 10px;">
-        
-        <textarea id="rev-text" rows="3" placeholder="Напишіть ваші враження..." 
-                  style="background: #1a100a; border: 1px solid #44332a; color: white; padding: 10px; resize: none;"></textarea>
-        
-        <button class="add-btn" style="width: auto; padding: 10px 25px;" onclick="sendReview()">
-            Надіслати на модерацію
-        </button>
-    </div>
-</div>
-        </button>
-            </aside>
+                </div>
+                <div class="sidebar-rec-wrapper" style="margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                    <h3 style="font-size: 16px; margin-bottom: 20px;">🔥 Рекомендуємо</h3>
+                    <div id="sidebar-rec-grid" style="display: flex; flex-direction: column; gap: 15px;">
+                        </div>
+                </div>
 
+                <div id="review-form-section" style="margin-top: 50px; padding: 20px; background: rgba(255,255,255,0.03); border: 1px solid #33251e; border-radius: 8px;">
+                    <h4 style="color: var(--primary-orange); margin-top: 0;">Залишити відгук</h4>
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                        <input type="text" id="rev-author" placeholder="Ваше ім'я" style="background: #1a100a; border: 1px solid #44332a; color: white; padding: 10px; border-radius: 4px;">
+                        <textarea id="rev-text" rows="3" placeholder="Враження..." style="background: #1a100a; border: 1px solid #44332a; color: white; padding: 10px; resize: none; border-radius: 4px;"></textarea>
+                        <button class="add-btn" style="width: 100%; padding: 10px;" onclick="sendReview()">Надіслати</button>
+                    </div>
+                </div>
+            </aside>
 
             <main class="product-page">
                 <div class="gallery-col">
@@ -117,7 +107,6 @@
                         <img id="main-view" src="" alt="Фото товару">
                         <button class="nav-arrow right" onclick="changeImage(1)">&#10095;</button>
                     </div>
-                    
                     <div class="thumbs-grid" id="gallery-thumbs"></div>
 
                     <div class="product-specs" style="margin-top: 20px; border-top: 1px solid rgba(214, 96, 58, 0.3); padding-top: 15px;">
@@ -136,43 +125,33 @@
                             </tr>
                         </table>
                     </div>
-
-                    <p id="product-tips" style="font-size: 13px; color: #888; display: none;">
-                        <i></i>
-                    </p>
+                    <p id="product-tips" style="font-size: 13px; color: #888; display: none;"><i></i></p>
                 </div>
 
                 <div class="info-col">
                     <span class="heat-tag" id="product-heat"></span>
-                    
                     <h1 id="p-name">Завантаження...</h1>
-                    
                     <div id="p-desc" style="line-height: 1.8; opacity: 0.8; margin-bottom: 20px;"></div>
-               
+                
                     <div class="price-big" id="p-price" data-val="0" data-allow-sale="true">
                         0.00 <span style="font-size: 16px; opacity: 0.6; font-weight: normal;">/ 5 шт.</span>
                     </div>    
-                <div id="cart-action-zone">
-                    <div style="display: flex; gap: 15px; margin-top: 30px;">
-                        <input type="number" id="p-qty" value="1" min="1" style="width: 60px; background: #1a120e; border: 1px solid #44332a; color: white; text-align: center;">
-                        <button class="add-btn" onclick="pushToCart()">Додати у кошик</button>
+                    <div id="cart-action-zone">
+                        <div style="display: flex; gap: 15px; margin-top: 30px;">
+                            <input type="number" id="p-qty" value="1" min="1" style="width: 60px; background: #1a120e; border: 1px solid #44332a; color: white; text-align: center; border-radius: 4px;">
+                            <button class="add-btn" onclick="pushToCart()">Додати у кошик</button>
+                        </div>
                     </div>
-                </div>
                     <div class="product-meta" style="margin-top: 25px; border-top: 1px dashed #443; padding-top: 15px;">
-                        <p style="margin: 5px 0; font-size: 14px; opacity: 0.8;">
-                            <strong>Кількість:</strong> <span id="meta-count"></span>
-                        </p>
-                        <p style="margin: 5px 0; font-size: 14px; opacity: 0.8;">
-                            <strong>Пакування:</strong> <span id="meta-pack"></span>
-                        </p>
-                        <p style="margin: 5px 0; font-size: 14px; opacity: 0.8;">
-                            <strong>Рік збору:</strong> <span id="meta-year"></span>
-                        </p>
+                        <p style="margin: 5px 0; font-size: 14px; opacity: 0.8;"><strong>Кількість:</strong> <span id="meta-count"></span></p>
+                        <p style="margin: 5px 0; font-size: 14px; opacity: 0.8;"><strong>Пакування:</strong> <span id="meta-pack"></span></p>
+                        <p style="margin: 5px 0; font-size: 14px; opacity: 0.8;"><strong>Рік збору:</strong> <span id="meta-year"></span></p>
                     </div>
                 </div>
             </main>
-        </div>
-    </div>
+        
+        </div> </div>
+</div>
     <footer>
         <div class="container footer-content">
             <div class="footer-logo">
@@ -225,13 +204,13 @@
 
                     <div class="form-group">
                         <label>Місто</label>
-                        <input type="text" id="cust-city" placeholder="Київ">
+                        <input type="text" id="cust-city" placeholder="Місто">
                         <small style="opacity: 0.5; font-size: 10px;">Тільки населені пункти України</small>
                     </div>
 
                     <div class="form-group">
                         <label>Відділення № або Адреса</label>
-                        <input type="text" id="cust-branch" placeholder="Наприклад: Відділення №10 або вул. Садова, 5">
+                        <input type="text" id="cust-branch" placeholder="Наприклад: Відділення №10 вул. Садова, 5">
                     </div>
                     <div class="form-group">
                         <label>Електронна пошта</label>

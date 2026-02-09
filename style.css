@@ -65,6 +65,10 @@
     /* Використовує стандартні кольори */
 }
 
+/* СТОРІНКА ТОВАРУ */
+.product-page-layout {
+    
+}
 
 /* =========================================
    🌍 СЕКЦІЯ 4: ГЛОБАЛЬНІ СТИЛІ
@@ -391,33 +395,74 @@ header {
     font-weight: bold;
 }
 
-/* Випадаюче меню кошика */
+/* =========================================
+   ВИПРАВЛЕНИЙ КОШИК (НА МІСЦІ + СТАБІЛЬНИЙ HOVER)
+   ========================================= */
+
+.cart-wrapper {
+    position: absolute;  /* Повертаємо його в куток */
+    top: 25px;           /* Твій відступ зверху */
+    right: 40px;         /* Твій відступ справа */
+    z-index: 200;
+    padding-bottom: 20px; /* Створюємо зону комфорту під іконкою */
+}
+
 .cart-dropdown {
     position: absolute;
-    top: calc(100% + 10px);
+    top: calc(100% - 5px); /* Трішки підтягуємо вгору до іконки */
     right: 0;
     width: 320px;
     background: var(--cart-bg);
-    border: 1px solid var(--primary-color);
+    border: 1px solid var(--primary-orange);
     border-radius: 8px;
     padding: 20px;
-    display: none;
     z-index: 1001;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-.cart-wrapper:hover .cart-dropdown { display: block; }
-.cart-items-list { max-height: 250px; overflow-y: auto; margin-bottom: 15px; }
 
-/* Адаптація кошика для телефонів */
-@media (max-width: 600px) {
-    .cart-wrapper { top: 20px; right: 15px; }
-    .cart-icon-svg { width: 24px; height: 24px; }
+    /* Плавність та затримка (щоб не зникав миттєво) */
+    display: block; /* Залишаємо block для простоти */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    transition-delay: 0.2s; /* Даємо 0.2 сек, щоб мишка встигла повернутися */
 }
 
+/* Стан при наведенні */
 .cart-wrapper:hover .cart-dropdown {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition-delay: 0s; /* З'являється миттєво */
 }
 
+/* ТРЮК "НЕВИДИМИЙ МІСТ" */
+/* Цей блок заповнює порожнечу між кнопкою і меню, щоб hover не втрачався */
+.cart-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -25px; 
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: transparent;
+}
+
+/* Маленька декоративна стрілочка зверху */
+.cart-dropdown::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 15px;
+    width: 12px;
+    height: 12px;
+    background: var(--cart-bg);
+    border-left: 1px solid var(--primary-orange);
+    border-top: 1px solid var(--primary-orange);
+    transform: rotate(45deg);
+}
+
+/* Виправляємо список всередині */
 .cart-items-container {
     max-height: 300px;
     overflow-y: auto;
@@ -1172,6 +1217,44 @@ header {
     opacity: 0.8;
 }
 
+/* Тільки для сторінки товару */
+.product-page-layout {
+    background: radial-gradient(circle at 50% 30%, #2c1e17 0%, #1a100a 100%) !important;
+    background-attachment: fixed;
+}
+/* Назва товару */
+.product-page-layout #p-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    margin-bottom: 15px;
+}
+
+/* Мітка гостроти (Heat Tag) */
+.product-page-layout .heat-tag {
+    background: rgba(214, 96, 58, 0.1) !important;
+    border: 1px solid var(--primary-orange) !important;
+    color: var(--primary-orange) !important;
+    padding: 6px 16px !important;
+    border-radius: 50px !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    box-shadow: 0 0 15px rgba(214, 96, 58, 0.2);
+}
+
+/* Великий цінник */
+.product-page-layout .price-big {
+    font-size: 32px !important;
+    color: #fff !important;
+    font-weight: 700;
+    margin: 20px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
 
 /* =========================================
    🎯 СЕКЦІЯ 14: КНОПКИ
@@ -1706,5 +1789,5 @@ footer {
 
 /* ╔═══════════════════════════════════════════════════════════╗
    ║  КІНЕЦЬ ФАЙЛУ                                            ║
-   ║  Всього: 20 секцій, ~1350 рядків коду                   ║
+   ║  Всього: 20 секцій, ~1750 рядків коду                   ║
    ╚═══════════════════════════════════════════════════════════╝ */

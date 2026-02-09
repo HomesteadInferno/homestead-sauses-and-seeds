@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tipsEl && product.growTip) {
             tipsEl.style.display = 'block';
             const tipText = tipsEl.querySelector('i');
-            if (tipText) tipText.innerText = `* ${product.growTip}`;
+            if (tipText) tipText.innerText = `Поради від Homestead: ${product.growTip}`;
         }
 
         // ===== 7. ГАЛЕРЕЯ ФОТОГРАФІЙ =====
