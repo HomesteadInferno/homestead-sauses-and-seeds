@@ -178,7 +178,7 @@ heatScore:"1",
         inStock: true // Є в наявності
     },
 
-"7PotBrainStrainYellow": {
+"7Potbrainstrainyellow": {
         name: "7 Pot Brain Strain Yellow",
         searchName: "Сім пот брейн жовтий, Севен пот брейн, Сім-пот брейн, Жовтий Севен пот, 7 Pot Brain Strain Yellow",
         category: "seeds",
@@ -282,7 +282,7 @@ heatScore:"3",
         price: 50,
         heatLevel: "☠️ ЕКСТРЕМАЛЬНА+ (1,600,000 – 2,200,000+ SHU)",
 heatScore:"4",
-        images: ["", "", ""],
+        images: ["1770729519875.png", "", ""],
         specs: {
             maturity: "110-120 днів (дуже довгий шлях до фінішу)",
             height: "До 120 см",
