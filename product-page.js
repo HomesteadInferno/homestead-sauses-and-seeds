@@ -99,10 +99,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const specMaturity = document.getElementById('spec-maturity');
             const specHeight = document.getElementById('spec-height');
             const specSpecies = document.getElementById('spec-species');
+            const specYield = document.getElementById('spec-yield'); // Додали нову змінну
             
             if (specMaturity) specMaturity.innerText = product.specs.maturity || "-";
             if (specHeight) specHeight.innerText = product.specs.height || "-";
             if (specSpecies) specSpecies.innerText = product.specs.species || "-";
+            if (specYield) specYield.innerText = product.specs.yield || "-"; // Додали вивід
         }
 
         // ===== 5. МЕТА-ДАНІ (кількість, пакування, рік) =====
