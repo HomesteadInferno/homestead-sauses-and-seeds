@@ -11,7 +11,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Зберігаємо ID глобально
     currentProductId = productId;
+    // ... ТЕМИ СТОРІНОК ...
+    document.body.classList.remove('theme-fire', 'theme-forest', 'theme-peppers');
 
+        if (product.category === "sauces") {
+            document.body.classList.add('theme-fire');
+        } else if (product.category === "otherseeds") {
+            document.body.classList.add('theme-forest');
+        } else if (product.category === "peppers") {
+            document.body.classList.add('theme-peppers');
+        }
     if (product) {
         // ===== 1. SEO (для Google та соцмереж) =====
         document.title = `${product.name} — купити в Homestead`;
