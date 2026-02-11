@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self'; 
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+    font-src 'self' https://fonts.gstatic.com; 
+    script-src 'self' 'unsafe-inline' https://script.google.com; 
+    connect-src 'self' https://script.google.com https://script.googleusercontent.com; 
+    img-src 'self' data:;">
+
+    <title>Купити насіння овочів — Homestead</title>
+    <meta name="description" content="Каталог насіння овочів">
+    <meta name="keywords" content="насіння, купити насіння перцю, насіння овочів, вирощування, насіння помідорів">
+
+    <meta property="og:title" content="Насіння овочів — Homestead">
+    <meta property="og:description" content="Великий вибір насіння. Вирости справжній вогонь вдома!">
+    <meta property="og:image" content="1.PNG"> 
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body class="otherseeds-page">
+
+    <div class="overlay">
+        <div class="container">
+            <header>
+                <a href="index.html">
+                    <img src="homesteadlogo.png" alt="Homestead Logo" class="logo-small">
+                </a>
+                <!-- 🔍 БЛОК ПОШУКУ -->
+    <div class="search-container" style="margin-top: 20px;">
+        <input 
+            type="text" 
+            id="search-input" 
+            placeholder="🔍 Шукати товари..."
+            autocomplete="off"
+        >
+        <span class="search-icon">🔍</span>
+        <div id="search-results"></div>
+    </div>
+
+            </header>
+            
+            <button class="back-btn" onclick="goBack()">
+                <svg viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+                Назад
+            </button>
+
+            <div class="main-layout">
+                <aside class="sidebar">
+                    <h3>Категорії</h3>
+                    <nav>
+                        <ul>
+                            <li><a href="seedsandseedlings.html">🌶️ Насіння супер-хотів</a></li>
+                            <li><a href="sauces.html">🔥 Крафтові Соуси</a></li>
+                            <li><a href="otherseeds.html">🌱 Інше насіння</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <main class="products-grid"data-category="otherseeds">
+                    <h1 class="page-title">Насіння овочів</h1>
+
+
+<div class="filter-section">
+    <span class="filter-title">Тип овочів:</span>
+    <div class="filter-buttons">
+        <button class="filter-btn active" data-heat="all">Всі</button>
+        <button class="filter-btn" data-heat="1">🍅 Помідори</button>
+        <button class="filter-btn" data-heat="2">🫑 Перець</button>
+        <button class="filter-btn" data-heat="3">🥒 Огірки</button>
+        <button class="filter-btn" data-heat="4">Інше насіння</button>
+    </div>
+</div>
+<div id="catalog-container" class="products-grid-inner">
+    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">
+                <img src="homesteadlogo.png" alt="Homestead" class="footer-logo-img">
+            </div>
+            
+            <div class="footer-links">
+                <a href="faq.html">FAQ</a>
+            </div>
+            <div class="footer-contacts">
+                <span>+00000000000</span>
+                <a href="mailto:email@example.com">Email</a>
+                <a href="faq.html">Інфо</a>
+            </div>
+            <div class="footer-pp">
+                    <a href="privacy.html">Політика конфіденційності</a>
+                </div>
+        </div>
+    </footer>
+
+    <a href="#" class="floating-cart" onclick="openCheckout(); return false;">
+        <span class="cart-icon">🛒</span>
+        <span id="cart-count">0</span>
+    </a>
+
+    <div id="checkoutModal" class="modal">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeCheckout()">&times;</span>
+            
+            <div id="modal-main-content" style="display: grid; grid-template-columns: 1fr 300px; gap: 40px; width: 100%;">
+                <div class="form-side">
+                    <h2 style="color: var(--primary-orange); margin-top:0;">Оформлення</h2>
+                    <div class="form-group">
+                        <label>Прізвище Ім'я По-батькові</label>
+                        <input type="text" id="cust-name">
+                    </div>
+                    <div class="form-group">
+                        <label>Телефон</label>
+                        <input type="tel" id="cust-phone" placeholder="+38XXXXXXXXXX" maxlength="13">
+                    </div>
+                    <div class="form-group">
+                        <label>Спосіб доставки</label>
+                        <select id="cust-delivery">
+                            <option value="Відділення НП">Нова Пошта (Відділення)</option>
+                            <option value="Поштомат НП">Нова Пошта (Поштомат)</option>
+                            <option value="Кур'єр НП">Нова Пошта (Адресна доставка)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Місто</label>
+                        <input type="text" id="cust-city" placeholder="Київ">
+                        <small style="opacity: 0.5; font-size: 10px;">Тільки населені пункти України</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Відділення № або Адреса</label>
+                        <input type="text" id="cust-branch" placeholder="Наприклад: Відділення №10 або вул. Садова, 5">
+                    </div>
+                    <div class="form-group">
+                        <label>Електронна пошта</label>
+                        <input type="text" id="email" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label>Коментар</label>
+                        <textarea id="cust-comment"></textarea>
+                    </div>
+                    <!-- HONEYPOT: Приховане поле для захисту від ботів -->
+<div class="form-group" style="position: absolute; left: -9999px; opacity: 0;">
+    <label>Веб-сайт (не заповнюйте це поле)</label>
+    <input type="text" id="website_url" name="website_url" tabindex="-1" autocomplete="off">
+</div>
+                </div>
+
+                <div class="summary-side">
+                    <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                        <h4 style="margin-top:0;">ВАШІ ТОВАРИ:</h4>
+                        <div id="final-list"></div> 
+                        <div style="font-size: 20px; font-weight: bold; border-top: 1px solid #443; padding-top: 10px; text-align: right;">
+                            Разом: <span id="final-price">0.00</span>
+                        </div>
+                    </div>
+                    <button class="add-btn" style="margin-top:20px; background:#6ba86b;" onclick="submitOrder()">Замовити</button>
+                </div>
+            </div>
+
+            <div id="success-msg" style="display:none; text-align: center; width: 100%;">
+                <h2>🌿 Замовлення прийнято!</h2>
+                <p>Номер вашого замовлення: <span id="orderNumberDisplay"></span></p>
+                <p>Дякуємо, ми скоро зв'яжемося з вами.</p>
+                <button class="add-btn" onclick="closeCheckout()">Закрити</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="products.js"></script>
+    <script src="search.js"></script>
+    <script src="cart.js"></script>
+    <script src="catalog.js"></script>
+</body>
+</html>

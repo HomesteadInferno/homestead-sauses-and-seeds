@@ -55,9 +55,20 @@
 
 /* 🔥 СТОРІНКА СОУСІВ - БАГРОВА ТЕМА */
 .sauces-page {
-    --primary-color: #8b1e3f;          /* Багровий */
-    --primary-hover: #6b1530;
-    --price-color: #ff6b9d;            /* Рожево-червоний для ціни */
+    --primary-color: #BC2C1A;          /* Багровий */
+    --primary-hover: #E75E4B;
+    --price-color: #E96E5D;            /* Рожево-червоний для ціни */
+}
+
+.otherseeds-page {
+    /* Насичений трав'яний зелений — символ росту та врожаю */
+    --primary-color: #52a052; 
+    
+    /* Темніший зелений для наведення (hover) */
+    --primary-hover: #3e7a3e;
+    
+    /* Колір ціни — зробимо його трохи світлішим, лимонно-зеленим, щоб виділявся */
+    --price-color: #a8d64d;  
 }
 
 /* 📚 СТОРІНКА FAQ */
@@ -69,6 +80,8 @@
 .product-page-layout {
     
 }
+
+
 
 /* =========================================
    🌍 СЕКЦІЯ 4: ГЛОБАЛЬНІ СТИЛІ
@@ -1726,8 +1739,6 @@ footer {
     .step-grid {
         grid-template-columns: 1fr;
     }
-
-   
 }
 
 /* Маленькі мобільні (до 480px) */
@@ -1743,62 +1754,8 @@ footer {
     .error-404 h1 {
         font-size: 80px;
     }
-
 }
 
-@media (max-width: 768px) {
-    
-    /* Спільні налаштування сітки */
-    .main-grid {
-        display: flex !important;
-        flex-direction: column !important;
-        grid-template-columns: 1fr !important; 
-        gap: 20px;
-    }
-
-    /* --- СТОРІНКА ТОВАРУ --- */
-    /* Товар вгору, сайдбар вниз */
-    .product-page-layout .product-content-wrapper {
-        order: 1 !important;
-    }
-    .product-page-layout .sidebar {
-        order: 2 !important;
-        margin-top: 30px;
-    }
-
-    /* --- СТОРІНКА КАТЕГОРІЙ --- */
-    /* Категорії вгору, товари вниз */
-    .category-page-layout .sidebar {
-        order: 1 !important;
-        margin-bottom: 20px;
-    }
-    .category-page-layout .product-content-wrapper {
-        order: 2 !important;
-    }
-
-    /* Адаптація самої картки товару */
-    .product-page {
-        grid-template-columns: 1fr !important;
-        gap: 30px;
-    }
-
-    .main-img-wrap {
-        height: auto !important;
-        aspect-ratio: 1 / 1;
-    }
-
-    .product-page-layout #p-name {
-        font-size: 2rem;
-    }
-
-    .price-big {
-        font-size: 28px !important;
-    }
-
-    .product-specs td {
-        font-size: 13px;
-    }
-}
 
 /* =========================================
    🎁 СЕКЦІЯ 20: ДОПОМІЖНІ КЛАСИ
@@ -1841,7 +1798,6 @@ footer {
     font-weight: bold;
     z-index: 20;
 }
-
 
 /* ╔═══════════════════════════════════════════════════════════╗
    ║  КІНЕЦЬ ФАЙЛУ                                            ║
