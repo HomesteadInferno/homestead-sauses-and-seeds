@@ -12,15 +12,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Зберігаємо ID глобально
     currentProductId = productId;
     // ... ТЕМИ СТОРІНОК ...
-    document.body.classList.remove('theme-fire', 'theme-forest', 'theme-peppers');
+    // Отримуємо посилання на body
+const body = document.body;
 
-        if (product.category === "sauces") {
-            document.body.classList.add('theme-fire');
-        } else if (product.category === "otherseeds") {
-            document.body.classList.add('theme-forest');
-        } else if (product.category === "peppers") {
-            document.body.classList.add('theme-peppers');
-        }
+// Очищуємо старі класи тем, щоб вони не змішувалися
+body.classList.remove('seeds-page', 'sauces-page', 'otherseeds-page', 'theme-fire');
+
+// Встановлюємо тему залежно від категорії
+if (product.category === 'seeds') {
+    body.classList.add('seeds-page');
+} else if (product.category === 'sauces') {
+    body.classList.add('sauces-page');
+} else if (product.category === 'otherseeds') {
+    body.classList.add('otherseeds-page');
+}
     if (product) {
         // ===== 1. SEO (для Google та соцмереж) =====
         document.title = `${product.name} — купити в Homestead`;
