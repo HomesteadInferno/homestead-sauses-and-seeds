@@ -85,6 +85,28 @@ document.addEventListener('DOMContentLoaded', () => {
         // ===== 2. ЗАПОВНЮЄМО ОСНОВНУ ІНФОРМАЦІЮ =====
         document.getElementById('p-name').innerText = product.name;
         document.getElementById('p-desc').innerHTML = product.description;
+
+        // ===== 2.1 ПЕРЕВІРКА НА ЕКСТРЕМАЛЬНУ ГОСТРОТУ (через heatScore) =====
+const warningZone = document.getElementById('extreme-warning-zone');
+
+if (warningZone) {
+    // Перевіряємо, чи це 4-й рівень (наш максимум)
+    if (product.heatScore === "4") {
+        warningZone.innerHTML = `
+            <div class="extreme-heat-warning">
+                <div class="warning-icon">💀</div>
+                <div class="warning-text">
+                    <h5>УВАГА: ЕКСТРЕМАЛЬНИЙ РІВЕНЬ КАПСАЇЦИНУ</h5>
+                    <p>Концентрація діючої речовини в цьому сорті класифікується як екстремальна. Необережне поводження може призвести до хімічних опіків слизової. Homestead наполегливо рекомендує використовувати захисні рукавички.</p>
+                </div>
+            </div>
+        `;
+        warningZone.style.display = 'block';
+    } else {
+        warningZone.style.display = 'none';
+    }
+}
+
         
         // Рівень гостроти (якщо є)
         const heatTag = document.getElementById('product-heat');
@@ -132,7 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tipsEl && product.growTip) {
             tipsEl.style.display = 'block';
             const tipText = tipsEl.querySelector('i');
-            if (tipText) tipText.innerText = `Поради від Homestead: ${product.growTip}`;
+            if (tipText) {
+    tipText.innerHTML = `<span class="tip-prefix">Поради від Homestead:</span> ${product.growTip}`;
+}
         }
 
         // ===== 7. ГАЛЕРЕЯ ФОТОГРАФІЙ =====

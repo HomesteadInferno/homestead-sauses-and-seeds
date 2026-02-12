@@ -1217,7 +1217,7 @@ header {
 
 .product-specs table {
     width: 100%;
-    font-size: 14px;
+    font-size: 16px;
     border-collapse: collapse;
 }
 
@@ -1240,7 +1240,7 @@ header {
 .product-meta {
     margin-top: 25px;
     border-top: 1px dashed #443;
-    padding-top: 15px;
+    padding-top: 16px;
 }
 
 .product-meta p {
@@ -1286,6 +1286,51 @@ header {
     display: flex;
     align-items: baseline;
     gap: 10px;
+}
+
+/* Стиль плашки попередження */
+.extreme-heat-warning {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 0, 0, 0.05);
+    border: 1px double #ff0000;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    color: #ff4d4d;
+}
+
+.warning-icon {
+    font-size: 24px;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.5; }
+}
+
+.warning-text h5 {
+    margin: 0 0 5px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.warning-text p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.4;
+    opacity: 0.9;
+}
+
+.tip-prefix {
+    font-weight: bold;
+    color: var(--primary-orange); /* Або інший колір твоєї теми */
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+    margin-right: 5px;
 }
 
 /* =========================================
